@@ -19,7 +19,6 @@
     </style>
 </head>
 <body class="font-sans antialiased">
-    /*   This is a simple certificate verification system that allows users to upload certificates,*/
     <div class="min-h-screen bg-gray-100">
         <nav class="bg-white border-b border-gray-100">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
