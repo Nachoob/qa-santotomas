@@ -84,6 +84,8 @@ class CertificateController extends Controller
 
             $url = route('certificates.verify', $certificate->verification_code, absolute: true);
 
+            Log::info('URL generada para QR:', ['url' => $url]);
+
             $options = new QROptions([
                 'outputType' => QRCode::OUTPUT_IMAGE_PNG,
                 'eccLevel'   => QRCode::ECC_L,
@@ -121,6 +123,12 @@ class CertificateController extends Controller
      */
     public function verify(string $code)
     {
+        // Si $code contiene una URL, extrae solo el UUID
+        if (str_starts_with($code, 'http')) {
+            $parts = explode('/', rtrim($code, '/'));
+            $code = end($parts);
+        }
+
         $certificate = $this->certificateService->verifyCertificate($code);
         
         if (!$certificate) {
