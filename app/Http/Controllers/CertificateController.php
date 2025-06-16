@@ -124,7 +124,7 @@ class CertificateController extends Controller
     public function verify(string $code)
     {
         // Si $code contiene una URL, extrae solo el UUID
-        if (str_starts_with($code, 'http')) {
+        if (substr($code, 0, 4) === 'http') {
             $parts = explode('/', rtrim($code, '/'));
             $code = end($parts);
         }
