@@ -123,11 +123,14 @@ class CertificateController extends Controller
      */
     public function verify(string $code)
     {
-        // Si $code contiene una URL, extrae solo el UUID
+        // Compatibilidad universal: si $code contiene una URL, extrae solo el UUID
         if (substr($code, 0, 4) === 'http') {
             $parts = explode('/', rtrim($code, '/'));
             $code = end($parts);
         }
+        // Limpieza extra: eliminar espacios, saltos de línea y caracteres no válidos
+        $code = trim($code);
+        $code = preg_replace('/[^a-fA-F0-9\-]/', '', $code);
 
         $certificate = $this->certificateService->verifyCertificate($code);
         
