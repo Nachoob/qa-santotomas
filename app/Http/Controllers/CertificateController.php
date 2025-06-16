@@ -82,6 +82,8 @@ class CertificateController extends Controller
                 abort(404, 'Certificado no encontrado para generar QR.');
             }
 
+            Log::info('Public path for QR code saving:', ['path' => public_path('temp/')]);
+
             $url = route('certificates.verify', $certificate->verification_code, absolute: true);
 
             $options = new QROptions([
