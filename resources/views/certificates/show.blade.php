@@ -21,6 +21,10 @@
                 <dt class="col-sm-4">Estado</dt>
                 <dd class="col-sm-8">{{ $certificate->status }}</dd>
             </dl>
+            <div class="mb-3 text-center">
+                <img src="{{ route('certificates.qrcode', $certificate->verification_code) }}" alt="QR Code" class="img-fluid" style="max-width: 200px;">
+                <p class="mt-2">Escanea para verificar</p>
+            </div>
             @if($certificate->file_path ?? false)
                 <a href="{{ asset('storage/' . $certificate->file_path) }}" class="btn btn-outline-primary" download>Descargar archivo</a>
             @endif

@@ -7,6 +7,8 @@ use App\Models\Certificate;
 use App\Services\CertificateService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use chillerlan\QRCode\QRCode;
+use chillerlan\QRCode\QROptions;
 
 class CertificateController extends Controller
 {
@@ -62,6 +64,34 @@ class CertificateController extends Controller
     public function show(Certificate $certificate)
     {
         return view('certificates.show', compact('certificate'));
+    }
+    
+    /**
+     * Generate QR code for a certificate.
+     *
+     * @param string $code The verification code of the certificate.
+     * @return \Illuminate\Http\Response
+     */
+    public function generateQrCode(string $code)
+    {
+        $certificate = Certificate::where('verification_code', $code)->first();
+
+        if (!$certificate) {
+            abort(404);
+        }
+
+        $url = route('certificates.verify', $certificate->verification_code, absolute: true);
+
+        $options = new QROptions([
+            'outputType' => QRCode::OUTPUT_IMAGE_PNG,
+            'eccLevel'   => QRCode::ECC_L,
+            'scale'      => 5,
+            'quietzone'  => 1,
+        ]);
+
+        $qrcode = (new QRCode($options))->render($url);
+
+        return response($qrcode)->header('Content-Type', 'image/png');
     }
     
     /**

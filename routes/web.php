@@ -31,4 +31,6 @@ Route::get('/verify/{code}', [CertificateController::class, 'verify'])->name('ce
 
 Route::post('/api/certificates/check', [CertificateController::class, 'checkValidity'])->name('certificates.checkValidity');
 
+Route::get('/certificates/{code}/qrcode', [CertificateController::class, 'generateQrCode'])->name('certificates.qrcode');
+
 require __DIR__.'/auth.php';
