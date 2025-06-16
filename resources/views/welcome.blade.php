@@ -20,7 +20,7 @@
 </div>
 @auth
 <div class="row justify-content-center g-4">
-    <div class="col-md-5">
+    <div class="col-md-5 d-none">
         <div class="card card-minimal p-4">
             <h4 class="mb-3">Subir certificados</h4>
             <form id="uploadForm" class="row g-3">
@@ -38,7 +38,7 @@
             </form>
         </div>
     </div>
-    <div class="col-md-5">
+    <div class="col-md-5 mx-auto">
         <div class="card card-minimal p-4">
             <h4 class="mb-3">Verificar certificado</h4>
             <ul class="nav nav-tabs mb-3" id="verifyTab" role="tablist">
@@ -145,12 +145,45 @@
     function verifyCertificate(code) {
         document.getElementById('result').classList.remove('d-none');
         document.getElementById('verificationText').textContent = 'Verificando certificado...';
-        Swal.fire({
-            title: '¡Certificado encontrado!',
-            text: 'Verificando autenticidad...',
-            icon: 'info',
-            showConfirmButton: false,
-            timer: 2000
+
+        fetch('{{ route('certificates.checkValidity') }}', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+            },
+            body: JSON.stringify({ code: code })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.valid) {
+                Swal.fire({
+                    title: '¡Certificado Válido!',
+                    html: `<p><strong>Nombre:</strong> ${data.certificate.recipient_name}</p>
+                           <p><strong>Tipo:</strong> ${data.certificate.certificate_type}</p>
+                           <p><strong>Fecha de Emisión:</strong> ${data.certificate.issue_date}</p>
+                           ${data.certificate.expiry_date ? `<p><strong>Fecha de Expiración:</strong> ${data.certificate.expiry_date}</p>` : ''}
+                           <p><strong>Estado:</strong> ${data.certificate.status}</p>`,
+                    icon: 'success'
+                });
+                document.getElementById('verificationText').textContent = 'Certificado válido y encontrado.';
+            } else {
+                Swal.fire({
+                    title: 'Certificado Inválido',
+                    text: data.message || 'El certificado no es válido o ha expirado.',
+                    icon: 'error'
+                });
+                document.getElementById('verificationText').textContent = data.message || 'Certificado no válido.';
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            Swal.fire({
+                title: 'Error de Conexión',
+                text: 'No se pudo verificar el certificado. Inténtalo de nuevo.',
+                icon: 'error'
+            });
+            document.getElementById('verificationText').textContent = 'Error al verificar el certificado.';
         });
     }
 
