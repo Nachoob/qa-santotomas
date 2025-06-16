@@ -7,6 +7,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/verify', function () {
+    return view('certificates.verify');
+})->name('certificates.verify.form');
+
 Route::get('/verify/{code}', [CertificateController::class, 'verify'])->name('certificates.verify');
 
 Route::middleware(['auth'])->group(function () {

@@ -1,240 +1,166 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Sistema de verificación de certificados</title>
-    
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=inter:300,400,500,600,700&display=swap" rel="stylesheet" />
-    
-    <!-- Scripts -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://unpkg.com/html5-qrcode"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    
-    <style>
-        [x-cloak] { display: none !important; }
-    </style>
-</head>
-<body class="font-sans antialiased">
-    <div class="min-h-screen bg-gray-100">
-        <nav class="bg-white border-b border-gray-100">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="flex justify-between h-16">
-                    <div class="flex">
-                        <div class="flex-shrink-0 flex items-center">
-                            <h1 class="text-xl font-bold">Sistema de verificación de certificados</h1>
-                        </div>
-                    </div>
-                    @if (Route::has('login'))
-                        <div class="flex items-center">
-                            @auth
-                                <a href="{{ url('/dashboard') }}" class="text-sm text-gray-700 underline">Panel</a>
-                            @else
-                                <a href="{{ route('login') }}" class="text-sm text-gray-700 underline">Acceder</a>
-                                @if (Route::has('register'))
-                                    <a href="{{ route('register') }}" class="ml-4 text-sm text-gray-700 underline">Registro</a>
-                                @endif
-                            @endauth
-                        </div>
-                    @endif
+@extends('layout')
+@section('title', 'Sistema de verificación de certificados')
+@section('head')
+<style>
+    .home-intro {
+        max-width: 600px;
+        margin: 40px auto 60px auto;
+        text-align: center;
+    }
+    .card-minimal {
+        border-radius: 18px;
+        box-shadow: 0 2px 16px rgba(0,0,0,0.06);
+    }
+</style>
+@endsection
+@section('content')
+<div class="home-intro">
+    <h2 class="fw-bold mb-3">Bienvenido al sistema de verificación de certificados</h2>
+    <p class="lead">Este sistema te permite subir, generar y verificar certificados digitales de manera rápida y segura. Puedes verificar la autenticidad de un certificado escaneando su código QR o ingresando el código manualmente.</p>
+</div>
+<div class="row justify-content-center g-4">
+    <div class="col-md-5">
+        <div class="card card-minimal p-4">
+            <h4 class="mb-3">Subir certificados</h4>
+            <form id="uploadForm" class="row g-3">
+                <div class="col-12">
+                    <label class="form-label">Archivo certificado</label>
+                    <input type="file" class="form-control" accept=".pdf,.jpg,.jpeg,.png" required>
                 </div>
-            </div>
-        </nav>
-
-        <main class="py-12">
-            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                    <div class="p-6 text-gray-900">
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <!-- Certificate Upload Section -->
-                            <div class="bg-white p-6 rounded-lg shadow">
-                                <h2 class="text-xl font-semibold mb-4">Subir certificados</h2>
-                                <form id="uploadForm" class="space-y-4">
-                                    <div>
-                                        <label class="block text-sm font-medium text-gray-700">Archivo certificado</label>
-                                        <input type="file" class="mt-1 block w-full" accept=".pdf,.jpg,.jpeg,.png" required>
-                                    </div>
-                                    <div>
-                                        <label class="block text-sm font-medium text-gray-700">Detalles certificado</label>
-                                        <input type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm" placeholder="Certificate ID" required>
-                                    </div>
-                                    <button type="submit" class="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700">
-                                        Generar código QR
-                                    </button>
-                                </form>
-                            </div>
-
-                            <!-- QR Scanner Section -->
-                            <div class="bg-white p-6 rounded-lg shadow">
-                                <h2 class="text-xl font-semibold mb-4">Verificar certificado</h2>
-                                
-                                <!-- Tabs for Scanner/Manual Input -->
-                                <div class="mb-4">
-                                    <div class="border-b border-gray-200">
-                                        <nav class="-mb-px flex space-x-8" aria-label="Tabs">
-                                            <button id="scanner-tab" class="border-blue-500 text-blue-600 whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm">
-                                                Scanner
-                                            </button>
-                                            <button id="manual-tab" class="border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm">
-                                                Entrada manual
-                                            </button>
-                                        </nav>
-                                    </div>
-                                </div>
-
-                                <!-- Scanner Section -->
-                                <div id="scanner-section">
-                                    <div id="reader" class="w-full"></div>
-                                    <div class="mt-4">
-                                        <button id="startScanner" class="w-full bg-green-600 text-white py-2 px-4 rounded-md hover:bg-green-700">
-                                            Iniciar Scanner
-                                        </button>
-                                    </div>
-                                </div>
-
-                                <!-- Manual Input Section -->
-                                <div id="manual-section" class="hidden">
-                                    <div class="space-y-4">
-                                        <div>
-                                            <label class="block text-sm font-medium text-gray-700">Verificación de código</label>
-                                            <input type="text" id="verificationCode" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm" placeholder="Enter certificate code">
-                                        </div>
-                                        <button id="verifyManual" class="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700">
-                                            Verificar certificado
-                                        </button>
-                                    </div>
-                                </div>
-
-                                <div id="result" class="mt-4 p-4 bg-gray-50 rounded-md hidden">
-                                    <h3 class="font-medium">Resultado de la verificación</h3>
-                                    <p id="verificationText" class="mt-2"></p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                <div class="col-12">
+                    <label class="form-label">Detalles certificado</label>
+                    <input type="text" class="form-control" placeholder="Certificate ID" required>
                 </div>
-            </div>
-        </main>
+                <div class="col-12">
+                    <button type="submit" class="btn btn-primary w-100">Generar código QR</button>
+                </div>
+            </form>
+        </div>
     </div>
+    <div class="col-md-5">
+        <div class="card card-minimal p-4">
+            <h4 class="mb-3">Verificar certificado</h4>
+            <ul class="nav nav-tabs mb-3" id="verifyTab" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="scanner-tab" data-bs-toggle="tab" data-bs-target="#scanner-section" type="button" role="tab">Scanner</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="manual-tab" data-bs-toggle="tab" data-bs-target="#manual-section" type="button" role="tab">Entrada manual</button>
+                </li>
+            </ul>
+            <div class="tab-content">
+                <div class="tab-pane fade show active" id="scanner-section" role="tabpanel">
+                    <div id="reader" class="w-100 mb-3"></div>
+                    <button id="startScanner" class="btn btn-success w-100">Iniciar Scanner</button>
+                </div>
+                <div class="tab-pane fade" id="manual-section" role="tabpanel">
+                    <div class="mb-3">
+                        <label class="form-label">Verificación de código</label>
+                        <input type="text" id="verificationCode" class="form-control" placeholder="Enter certificate code">
+                    </div>
+                    <button id="verifyManual" class="btn btn-primary w-100">Verificar certificado</button>
+                </div>
+            </div>
+            <div id="result" class="alert alert-info mt-3 d-none">
+                <h5 class="mb-2">Resultado de la verificación</h5>
+                <p id="verificationText"></p>
+            </div>
+        </div>
+    </div>
+</div>
+@endsection
+@section('scripts')
+<script src="https://unpkg.com/html5-qrcode"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    let html5QrcodeScanner = null;
+    let isScanning = false;
 
-    <script>
-        let html5QrcodeScanner = null;
-        let isScanning = false;
+    // Bootstrap tab switching is automatic
 
-        // Tab switching
-        document.getElementById('scanner-tab').addEventListener('click', function() {
-            document.getElementById('scanner-section').classList.remove('hidden');
-            document.getElementById('manual-section').classList.add('hidden');
-            this.classList.add('border-blue-500', 'text-blue-600');
-            this.classList.remove('border-transparent', 'text-gray-500');
-            document.getElementById('manual-tab').classList.remove('border-blue-500', 'text-blue-600');
-            document.getElementById('manual-tab').classList.add('border-transparent', 'text-gray-500');
-        });
-
-        document.getElementById('manual-tab').addEventListener('click', function() {
-            document.getElementById('scanner-section').classList.add('hidden');
-            document.getElementById('manual-section').classList.remove('hidden');
-            this.classList.add('border-blue-500', 'text-blue-600');
-            this.classList.remove('border-transparent', 'text-gray-500');
-            document.getElementById('scanner-tab').classList.remove('border-blue-500', 'text-blue-600');
-            document.getElementById('scanner-tab').classList.add('border-transparent', 'text-gray-500');
-            if (isScanning) {
-                stopScanner();
-            }
-        });
-
-        // Scanner functionality
-        document.getElementById('startScanner').addEventListener('click', function() {
-            if (!isScanning) {
-                startScanner();
-            } else {
-                stopScanner();
-            }
-        });
-
-        function startScanner() {
-            if (!html5QrcodeScanner) {
-                html5QrcodeScanner = new Html5QrcodeScanner(
-                    "reader",
-                    { 
-                        fps: 10, 
-                        qrbox: {width: 250, height: 250},
-                        aspectRatio: 1.0
-                    },
-                    false
-                );
-            }
-
-            html5QrcodeScanner.render(onScanSuccess, onScanFailure);
-            isScanning = true;
-            document.getElementById('startScanner').textContent = 'Stop Scanner';
-            document.getElementById('startScanner').classList.remove('bg-green-600', 'hover:bg-green-700');
-            document.getElementById('startScanner').classList.add('bg-red-600', 'hover:bg-red-700');
-        }
-
-        function stopScanner() {
-            if (html5QrcodeScanner) {
-                html5QrcodeScanner.clear();
-            }
-            isScanning = false;
-            document.getElementById('startScanner').textContent = 'Start Scanner';
-            document.getElementById('startScanner').classList.remove('bg-red-600', 'hover:bg-red-700');
-            document.getElementById('startScanner').classList.add('bg-green-600', 'hover:bg-green-700');
-        }
-
-        function onScanSuccess(decodedText, decodedResult) {
+    // Scanner functionality
+    document.getElementById('startScanner').addEventListener('click', function() {
+        if (!isScanning) {
+            startScanner();
+        } else {
             stopScanner();
-            verifyCertificate(decodedText);
         }
+    });
 
-        function onScanFailure(error) {
-            console.warn(`QR Code scan error: ${error}`);
+    function startScanner() {
+        if (!html5QrcodeScanner) {
+            html5QrcodeScanner = new Html5QrcodeScanner(
+                "reader",
+                { 
+                    fps: 10, 
+                    qrbox: {width: 250, height: 250},
+                    aspectRatio: 1.0
+                },
+                false
+            );
         }
+        html5QrcodeScanner.render(onScanSuccess, onScanFailure);
+        isScanning = true;
+        document.getElementById('startScanner').textContent = 'Detener Scanner';
+        document.getElementById('startScanner').classList.remove('btn-success');
+        document.getElementById('startScanner').classList.add('btn-danger');
+    }
 
-        // Manual verification
-        document.getElementById('verifyManual').addEventListener('click', function() {
-            const code = document.getElementById('verificationCode').value;
-            if (code) {
-                verifyCertificate(code);
-            } else {
-                Swal.fire({
-                    title: 'Error',
-                    text: 'Please enter a verification code',
-                    icon: 'error'
-                });
-            }
-        });
+    function stopScanner() {
+        if (html5QrcodeScanner) {
+            html5QrcodeScanner.clear();
+        }
+        isScanning = false;
+        document.getElementById('startScanner').textContent = 'Iniciar Scanner';
+        document.getElementById('startScanner').classList.remove('btn-danger');
+        document.getElementById('startScanner').classList.add('btn-success');
+    }
 
-        function verifyCertificate(code) {
-            document.getElementById('result').classList.remove('hidden');
-            document.getElementById('verificationText').textContent = 'Verifying certificate...';
-            
-            // Here you would typically make an API call to verify the certificate
-            // For now, we'll just show a success message
+    function onScanSuccess(decodedText, decodedResult) {
+        stopScanner();
+        verifyCertificate(decodedText);
+    }
+
+    function onScanFailure(error) {
+        // Opcional: mostrar error
+    }
+
+    // Manual verification
+    document.getElementById('verifyManual').addEventListener('click', function() {
+        const code = document.getElementById('verificationCode').value;
+        if (code) {
+            verifyCertificate(code);
+        } else {
             Swal.fire({
-                title: 'Certificate Found!',
-                text: 'Verifying authenticity...',
-                icon: 'info',
-                showConfirmButton: false,
-                timer: 2000
+                title: 'Error',
+                text: 'Por favor ingresa un código de verificación',
+                icon: 'error'
             });
         }
+    });
 
-        // Handle form submission
-        document.getElementById('uploadForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            // Here you would typically handle the file upload and QR code generation
-            Swal.fire({
-                title: 'Processing...',
-                text: 'Generating QR code for your certificate',
-                icon: 'info',
-                showConfirmButton: false,
-                timer: 2000
-            });
+    function verifyCertificate(code) {
+        document.getElementById('result').classList.remove('d-none');
+        document.getElementById('verificationText').textContent = 'Verificando certificado...';
+        Swal.fire({
+            title: '¡Certificado encontrado!',
+            text: 'Verificando autenticidad...',
+            icon: 'info',
+            showConfirmButton: false,
+            timer: 2000
         });
-    </script>
-</body>
-</html>
+    }
+
+    // Handle form submission
+    document.getElementById('uploadForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        Swal.fire({
+            title: 'Procesando...',
+            text: 'Generando código QR para tu certificado',
+            icon: 'info',
+            showConfirmButton: false,
+            timer: 2000
+        });
+    });
+</script>
+@endsection
