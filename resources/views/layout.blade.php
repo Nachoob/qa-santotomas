@@ -23,6 +23,7 @@
             top: 20px;
             left: 40px;
             height: 60px;
+            border-radius: 50%;
             width: auto;
         }
         .menu {
@@ -30,10 +31,51 @@
             top: 40px;
             left: 130px;
         }
+        .hamburger {
+            display: none;
+            position: absolute;
+            top: 35px;
+            right: 30px;
+            width: 40px;
+            height: 40px;
+            background: none;
+            border: none;
+            z-index: 20;
+        }
+        .hamburger span {
+            display: block;
+            width: 28px;
+            height: 4px;
+            margin: 6px auto;
+            background: #333;
+            border-radius: 2px;
+            transition: 0.3s;
+        }
+        .mobile-menu {
+            display: none;
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 220px;
+            height: 100vh;
+            background: #fff;
+            box-shadow: -2px 0 16px rgba(0,0,0,0.08);
+            z-index: 100;
+            padding: 60px 20px 20px 20px;
+        }
+        .mobile-menu.active {
+            display: block;
+        }
+        .mobile-menu .nav-link {
+            display: block;
+            margin-bottom: 18px;
+            font-size: 1.1rem;
+        }
         @media (max-width: 768px) {
             .curved-header { width: 100%; border-radius: 0 0 40px 40px; }
             .logo { left: 16px; top: 16px; height: 40px; }
-            .menu { left: 80px; top: 30px; }
+            .menu { display: none; }
+            .hamburger { display: block; }
         }
     </style>
     @yield('head')
@@ -57,6 +99,25 @@
                 @endauth
             </ul>
         </nav>
+        <button class="hamburger" id="hamburgerBtn" aria-label="Abrir menú">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        <nav class="mobile-menu" id="mobileMenu">
+            <ul class="nav flex-column">
+                <li class="nav-item"><a class="nav-link" href="/">Inicio</a></li>
+                @auth
+                    <li class="nav-item"><a class="nav-link" href="{{ route('certificates.create') }}">Generar Certificado</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ route('certificates.verify.form') }}">Validar Certificado</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/certificates">Mis Certificados</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Cerrar Sesión</a></li>
+                @else
+                    <li class="nav-item"><a class="nav-link" href="{{ route('login') }}">Iniciar Sesión</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ route('register') }}">Registrarse</a></li>
+                @endauth
+            </ul>
+        </nav>
     </header>
     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
         @csrf
@@ -64,6 +125,20 @@
     <main class="container mt-5 pt-5">
         @yield('content')
     </main>
+    <script>
+        // Menú hamburguesa para mobile
+        const hamburgerBtn = document.getElementById('hamburgerBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        hamburgerBtn?.addEventListener('click', function() {
+            mobileMenu.classList.toggle('active');
+        });
+        // Cerrar menú al hacer click fuera
+        document.addEventListener('click', function(e) {
+            if (mobileMenu.classList.contains('active') && !mobileMenu.contains(e.target) && e.target !== hamburgerBtn) {
+                mobileMenu.classList.remove('active');
+            }
+        });
+    </script>
     @yield('scripts')
 </body>
 </html> 
