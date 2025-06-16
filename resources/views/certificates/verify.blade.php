@@ -5,63 +5,41 @@
     <div class="col-md-7">
         <div class="card card-minimal p-4">
             <h3 class="mb-4">Verificar Certificado</h3>
-            @if(isset($certificate))
-                <div class="alert alert-success">
-                    ¡Certificado válido y encontrado!
+            <ul class="nav nav-tabs mb-3" id="verifyTab" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="scanner-tab" data-bs-toggle="tab" data-bs-target="#scanner-section" type="button" role="tab">Scanner</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="manual-tab" data-bs-toggle="tab" data-bs-target="#manual-section" type="button" role="tab">Entrada manual</button>
+                </li>
+            </ul>
+            <div class="tab-content">
+                <div class="tab-pane fade show active" id="scanner-section" role="tabpanel">
+                    <div id="reader" class="w-100 mb-3"></div>
+                    <button id="startScanner" class="btn btn-success w-100">Iniciar Scanner</button>
                 </div>
-                <dl class="row">
-                    <dt class="col-sm-4">Nombre</dt>
-                    <dd class="col-sm-8">{{ $certificate->recipient_name }}</dd>
-                    <dt class="col-sm-4">Email</dt>
-                    <dd class="col-sm-8">{{ $certificate->recipient_email }}</dd>
-                    <dt class="col-sm-4">Tipo</dt>
-                    <dd class="col-sm-8">{{ $certificate->certificate_type }}</dd>
-                    <dt class="col-sm-4">Fecha emisión</dt>
-                    <dd class="col-sm-8">{{ $certificate->issue_date }}</dd>
-                    <dt class="col-sm-4">Fecha expiración</dt>
-                    <dd class="col-sm-8">{{ $certificate->expiry_date ?? 'No expira' }}</dd>
-                    <dt class="col-sm-4">Código verificación</dt>
-                    <dd class="col-sm-8">{{ $certificate->verification_code }}</dd>
-                    <dt class="col-sm-4">Estado</dt>
-                    <dd class="col-sm-8">{{ $certificate->status }}</dd>
-                </dl>
-            @else
-                <ul class="nav nav-tabs mb-3" id="verifyTab" role="tablist">
-                    <li class="nav-item" role="presentation">
-                        <button class="nav-link active" id="scanner-tab" data-bs-toggle="tab" data-bs-target="#scanner-section" type="button" role="tab">Scanner</button>
-                    </li>
-                    <li class="nav-item" role="presentation">
-                        <button class="nav-link" id="manual-tab" data-bs-toggle="tab" data-bs-target="#manual-section" type="button" role="tab">Entrada manual</button>
-                    </li>
-                </ul>
-                <div class="tab-content">
-                    <div class="tab-pane fade show active" id="scanner-section" role="tabpanel">
-                        <div id="reader" class="w-100 mb-3"></div>
-                        <button id="startScanner" class="btn btn-success w-100">Iniciar Scanner</button>
-                    </div>
-                    <div class="tab-pane fade" id="manual-section" role="tabpanel">
-                        <form method="POST" action="{{ route('certificates.checkValidity') }}">
-                            @csrf
-                            <div class="mb-3">
-                                <label class="form-label">Código de verificación</label>
-                                <input type="text" name="code" class="form-control" placeholder="Ingrese el código" required>
-                            </div>
-                            <button type="submit" class="btn btn-primary w-100">Verificar certificado</button>
-                        </form>
-                    </div>
+                <div class="tab-pane fade" id="manual-section" role="tabpanel">
+                    <form id="manualVerifyForm" method="POST" action="#">
+                        @csrf
+                        <div class="mb-3">
+                            <label class="form-label">Código de verificación</label>
+                            <input type="text" name="code" id="manualCode" class="form-control" placeholder="Ingrese el código" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">Verificar certificado</button>
+                    </form>
                 </div>
-                @if(session('result'))
-                    <div class="alert alert-info mt-3">
-                        {{ session('result') }}
-                    </div>
-                @endif
-            @endif
+            </div>
+            <div id="result" class="alert alert-info mt-3 d-none">
+                <h5 class="mb-2">Resultado de la verificación</h5>
+                <p id="verificationText"></p>
+            </div>
         </div>
     </div>
 </div>
 @endsection
 @section('scripts')
 <script src="https://unpkg.com/html5-qrcode"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
     let html5QrcodeScanner = null;
     let isScanning = false;
@@ -102,8 +80,71 @@
             let parts = code.split('/');
             code = parts[parts.length - 1];
         }
-        window.location.href = `{{ url('/verify') }}/${code}`;
+        verifyCertificateAjax(code);
     }
     function onScanFailure(error) {}
+
+    // Verificación manual por AJAX
+    document.getElementById('manualVerifyForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const code = document.getElementById('manualCode').value;
+        if (code) {
+            verifyCertificateAjax(code);
+        } else {
+            Swal.fire({
+                title: 'Error',
+                text: 'Por favor ingresa un código de verificación',
+                icon: 'error'
+            });
+        }
+    });
+
+    function verifyCertificateAjax(code) {
+        Swal.fire({
+            title: 'Verificando...',
+            text: 'Consultando validez del certificado',
+            icon: 'info',
+            showConfirmButton: false,
+            allowOutsideClick: false,
+            allowEscapeKey: false,
+            didOpen: () => { Swal.showLoading(); }
+        });
+        fetch('{{ route('certificates.checkValidity') }}', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+            },
+            body: JSON.stringify({ code: code })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.valid) {
+                Swal.fire({
+                    title: '¡Certificado Válido!',
+                    html: `<p><strong>Nombre:</strong> ${data.certificate.recipient_name}</p>
+                           <p><strong>Tipo:</strong> ${data.certificate.certificate_type}</p>
+                           <p><strong>Fecha de Emisión:</strong> ${data.certificate.issue_date}</p>
+                           ${data.certificate.expiry_date ? `<p><strong>Fecha de Expiración:</strong> ${data.certificate.expiry_date}</p>` : ''}
+                           <p><strong>Estado:</strong> ${data.certificate.status}</p>`,
+                    icon: 'success'
+                });
+            } else {
+                Swal.fire({
+                    title: 'Certificado Inválido',
+                    text: data.message || 'El certificado no es válido o ha expirado.',
+                    icon: 'error'
+                });
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            Swal.fire({
+                title: 'Error de Conexión',
+                text: 'No se pudo verificar el certificado. Inténtalo de nuevo.',
+                icon: 'error'
+            });
+        });
+    }
 </script>
 @endsection 
