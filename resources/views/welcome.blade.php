@@ -18,6 +18,7 @@
     <h2 class="fw-bold mb-3">Bienvenido al sistema de verificación de certificados</h2>
     <p class="lead">Este sistema te permite subir, generar y verificar certificados digitales de manera rápida y segura. Puedes verificar la autenticidad de un certificado escaneando su código QR o ingresando el código manualmente.</p>
 </div>
+@auth
 <div class="row justify-content-center g-4">
     <div class="col-md-5">
         <div class="card card-minimal p-4">
@@ -68,8 +69,10 @@
         </div>
     </div>
 </div>
+@endauth
 @endsection
 @section('scripts')
+@auth
 <script src="https://unpkg.com/html5-qrcode"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
@@ -163,4 +166,5 @@
         });
     });
 </script>
+@endauth
 @endsection
