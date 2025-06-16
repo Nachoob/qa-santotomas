@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="es">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>@yield('title', 'Sistema de verificación de certificados')</title>
+    <title>@yield('title', 'Sistema de Verificación de Certificados')</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <style>
@@ -45,17 +45,15 @@
         </a>
         <nav class="menu">
             <ul class="nav">
-                <li class="nav-item"><a class="nav-link" href="/">{{ __('messages.welcome') }}</a></li>
-                <li class="nav-item"><a class="nav-link" href="{{ route('certificates.verify.form') }}">{{ __('messages.verify_certificate') }}</a></li>
-                <li class="nav-item"><a class="nav-link" href="/certificates">{{ __('messages.certificates_list') }}</a></li>
+                <li class="nav-item"><a class="nav-link" href="/">Inicio</a></li>
                 @auth
-                    @if(auth()->user()->is_admin)
-                        <li class="nav-item"><a class="nav-link" href="/admin">{{ __('messages.admin_panel') }}</a></li>
-                    @endif
-                    <li class="nav-item"><a class="nav-link" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">{{ __('messages.logout') }}</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ route('certificates.create') }}">Generar Certificado</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ route('certificates.verify.form') }}">Validar Certificado</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/certificates">Mis Certificados</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Cerrar Sesión</a></li>
                 @else
-                    <li class="nav-item"><a class="nav-link" href="{{ route('login') }}">{{ __('messages.login') }}</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{{ route('register') }}">{{ __('messages.register') }}</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ route('login') }}">Iniciar Sesión</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ route('register') }}">Registrarse</a></li>
                 @endauth
             </ul>
         </nav>
