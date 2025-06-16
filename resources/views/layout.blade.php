@@ -101,7 +101,7 @@
     @yield('head')
 </head>
 <body class="bg-light">
-    <header class="curved-header mt-3">
+    <header class="curved-header mt-md-3 mt-0">
         <a href="/">
             <img src="{{ asset('logo.png') }}" alt="Logo" class="logo">
         </a>
