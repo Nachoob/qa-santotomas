@@ -82,8 +82,6 @@ class CertificateController extends Controller
                 abort(404, 'Certificado no encontrado para generar QR.');
             }
 
-            Log::info('Public path for QR code saving:', ['path' => public_path('temp/')]);
-
             $url = route('certificates.verify', $certificate->verification_code, absolute: true);
 
             $options = new QROptions([
@@ -95,20 +93,15 @@ class CertificateController extends Controller
 
             $qrcode = (new QRCode($options))->render($url);
 
-            // Save the QR code to a temporary file for debugging
-            $filename = 'qrcode_' . $certificate->verification_code . '.png';
-            $filepath = public_path('temp/' . $filename);
-            file_put_contents($filepath, $qrcode);
-            
-            // Return a redirect to the actual image file
-            return redirect(asset('temp/' . $filename));
+            return response($qrcode)->header('Content-Type', 'image/png');
         } catch (\Exception $e) {
             Log::error('Error generating QR code', [
                 'code' => $code,
                 'error' => $e->getMessage(),
                 'trace' => $e->getTraceAsString(),
             ]);
-            abort(500, 'Error interno al generar el código QR.');
+            // Fallback for debugging: if it's not an image, return error as text.
+            return response('Error: ' . $e->getMessage(), 500)->header('Content-Type', 'text/plain');
         }
     }
     
