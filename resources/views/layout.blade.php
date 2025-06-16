@@ -57,15 +57,6 @@
                     <li class="nav-item"><a class="nav-link" href="{{ route('login') }}">{{ __('messages.login') }}</a></li>
                     <li class="nav-item"><a class="nav-link" href="{{ route('register') }}">{{ __('messages.register') }}</a></li>
                 @endauth
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="langDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        {{ __('messages.language') }}
-                    </a>
-                    <ul class="dropdown-menu" aria-labelledby="langDropdown">
-                        <li><a class="dropdown-item" href="?lang=es">{{ __('messages.spanish') }}</a></li>
-                        <li><a class="dropdown-item" href="?lang=en">{{ __('messages.english') }}</a></li>
-                    </ul>
-                </li>
             </ul>
         </nav>
     </header>

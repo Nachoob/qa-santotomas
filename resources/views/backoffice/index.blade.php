@@ -1,57 +1,55 @@
 @extends('layout')
 @section('title', 'Panel de Administración')
 @section('content')
-<div class="row">
-    <div class="col-12 mb-4">
-        <h2>Panel de Administración</h2>
-        <div class="d-flex align-items-center gap-3">
-            <form method="POST" action="#" class="d-inline">
-                @csrf
-                <label class="form-label me-2">Tema:</label>
-                <select class="form-select d-inline w-auto" name="theme" onchange="document.body.setAttribute('data-bs-theme', this.value)">
-                    <option value="light">Claro</option>
-                    <option value="dark">Oscuro</option>
-                </select>
-            </form>
-            <form method="POST" action="#" class="d-inline">
-                @csrf
-                <label class="form-label me-2">Color principal:</label>
-                <input type="color" name="main_color" value="#0d6efd" onchange="document.documentElement.style.setProperty('--bs-primary', this.value)">
-            </form>
+<div class="container py-4">
+    <div class="card shadow-sm">
+        <div class="card-header bg-primary text-white">
+            <h4 class="mb-0">{{ __('Panel de Administración - Certificados') }}</h4>
         </div>
-    </div>
-    <div class="col-12">
-        <div class="card card-minimal p-4">
-            <h4 class="mb-3">Certificados registrados</h4>
-            <div class="table-responsive">
-                <table class="table table-striped">
-                    <thead>
-                        <tr>
-                            <th>Nombre</th>
-                            <th>Email</th>
-                            <th>Tipo</th>
-                            <th>Fecha emisión</th>
-                            <th>Estado</th>
-                            <th>Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach($certificates as $certificate)
-                        <tr>
-                            <td>{{ $certificate->recipient_name }}</td>
-                            <td>{{ $certificate->recipient_email }}</td>
-                            <td>{{ $certificate->certificate_type }}</td>
-                            <td>{{ $certificate->issue_date }}</td>
-                            <td>{{ $certificate->status }}</td>
-                            <td>
-                                <a href="{{ route('certificates.show', $certificate) }}" class="btn btn-sm btn-outline-primary">Ver</a>
-                            </td>
-                        </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-            </div>
-            {{ $certificates->links() }}
+        <div class="card-body">
+            @if($certificates->isEmpty())
+                <div class="alert alert-info" role="alert">
+                    {{ __('No hay certificados registrados aún.') }}
+                </div>
+            @else
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th>{{ __('ID') }}</th>
+                                <th>{{ __('Código') }}</th>
+                                <th>{{ __('Nombre') }}</th>
+                                <th>{{ __('Email') }}</th>
+                                <th>{{ __('Actividad') }}</th>
+                                <th>{{ __('Acciones') }}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($certificates as $certificate)
+                                <tr>
+                                    <td>{{ $certificate->id }}</td>
+                                    <td>{{ $certificate->code }}</td>
+                                    <td>{{ $certificate->name }}</td>
+                                    <td>{{ $certificate->email }}</td>
+                                    <td>{{ $certificate->last_activity }}</td>
+                                    <td>
+                                        <a href="{{ route('certificates.show', $certificate->id) }}" class="btn btn-info btn-sm">{{ __('Ver') }}</a>
+                                        <a href="{{ route('certificates.edit', $certificate->id) }}" class="btn btn-warning btn-sm">{{ __('Editar') }}</a>
+                                        <form action="{{ route('certificates.destroy', $certificate->id) }}" method="POST" class="d-inline">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('{{ __('¿Estás seguro de que quieres eliminar este certificado?') }}')">{{ __('Eliminar') }}</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+                <div class="d-flex justify-content-center">
+                    {{ $certificates->links() }}
+                </div>
+            @endif
         </div>
     </div>
 </div>
