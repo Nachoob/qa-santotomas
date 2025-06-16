@@ -17,25 +17,23 @@
             border-bottom-right-radius: 60px 40px;
             box-shadow: 0 2px 16px rgba(0,0,0,0.06);
             z-index: 10;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            padding: 0 24px;
         }
         .logo {
-            position: absolute;
-            top: 20px;
-            left: 40px;
             height: 60px;
             border-radius: 50%;
             width: auto;
+            margin-right: 32px;
         }
         .menu {
-            position: absolute;
-            top: 40px;
-            left: 130px;
+            flex: 1;
         }
         .hamburger {
             display: none;
-            position: absolute;
-            top: 35px;
-            right: 30px;
+            margin-left: auto;
             width: 40px;
             height: 40px;
             background: none;
@@ -86,8 +84,16 @@
             transform: translateY(-10px) rotate(-45deg);
         }
         @media (max-width: 768px) {
-            .curved-header { width: 100%; border-radius: 0 0 40px 40px; }
-            .logo { left: 16px; top: 16px; height: 40px; }
+            .curved-header {
+                width: 100%;
+                border-radius: 0 0 40px 40px;
+                height: 72px;
+                padding: 0 12px;
+            }
+            .logo {
+                height: 50px;
+                margin-right: 18px;
+            }
             .menu { display: none; }
             .hamburger { display: block; }
         }
