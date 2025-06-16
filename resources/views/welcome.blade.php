@@ -21,6 +21,7 @@
 @auth
 <div class="row justify-content-center g-4">
     <div class="col-md-5 d-none">
+        
         <div class="card card-minimal p-4">
             <h4 class="mb-3">Subir certificados</h4>
             <form id="uploadForm" class="row g-3">
