@@ -36,4 +36,8 @@ Route::get('/certificates/{code}/qrcode', [CertificateController::class, 'genera
 
 Route::get('/limpiar-caches-seguro', [CacheController::class, 'clear']);
 
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->name('dashboard');
+
 require __DIR__.'/auth.php';
