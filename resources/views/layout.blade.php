@@ -62,14 +62,28 @@
             box-shadow: -2px 0 16px rgba(0,0,0,0.08);
             z-index: 100;
             padding: 60px 20px 20px 20px;
+            opacity: 0;
+            transform: translateX(100%);
+            transition: opacity 0.3s, transform 0.3s;
         }
         .mobile-menu.active {
             display: block;
+            opacity: 1;
+            transform: translateX(0);
         }
         .mobile-menu .nav-link {
             display: block;
             margin-bottom: 18px;
             font-size: 1.1rem;
+        }
+        .hamburger.active span:nth-child(1) {
+            transform: translateY(10px) rotate(45deg);
+        }
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+        .hamburger.active span:nth-child(3) {
+            transform: translateY(-10px) rotate(-45deg);
         }
         @media (max-width: 768px) {
             .curved-header { width: 100%; border-radius: 0 0 40px 40px; }
@@ -131,11 +145,13 @@
         const mobileMenu = document.getElementById('mobileMenu');
         hamburgerBtn?.addEventListener('click', function() {
             mobileMenu.classList.toggle('active');
+            hamburgerBtn.classList.toggle('active');
         });
         // Cerrar menú al hacer click fuera
         document.addEventListener('click', function(e) {
             if (mobileMenu.classList.contains('active') && !mobileMenu.contains(e.target) && e.target !== hamburgerBtn) {
                 mobileMenu.classList.remove('active');
+                hamburgerBtn.classList.remove('active');
             }
         });
     </script>
