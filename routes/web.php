@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BackofficeController;
+use App\Http\Controllers\CertificateController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -20,7 +21,18 @@ Route::middleware('auth')->group(function () {
 
 Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     Route::get('/', [BackofficeController::class, 'index'])->name('admin.index');
-    // Aquí puedes agregar más rutas de administración
 });
+
+Route::middleware(['auth'])->group(function () {
+    Route::resource('certificates', CertificateController::class);
+});
+
+Route::get('/verify', function () {
+    return view('certificates.verify');
+})->name('certificates.verify.form');
+
+Route::get('/verify/{code}', [CertificateController::class, 'verify'])->name('certificates.verify');
+
+Route::post('/api/certificates/check', [CertificateController::class, 'checkValidity'])->name('certificates.checkValidity');
 
 require __DIR__.'/auth.php';
