@@ -5,6 +5,25 @@
     <div class="col-md-7">
         <div class="card card-minimal p-4">
             <h3 class="mb-4">Generar/Registrar Certificado</h3>
+            @if (session('success'))
+                <div class="alert alert-success">
+                    {{ session('success') }}
+                </div>
+            @endif
+            @if (session('error'))
+                <div class="alert alert-danger">
+                    {{ session('error') }}
+                </div>
+            @endif
+            @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
             <form method="POST" action="{{ route('certificates.store') }}" enctype="multipart/form-data">
                 @csrf
                 <div class="mb-3">
