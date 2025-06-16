@@ -44,14 +44,27 @@
         </a>
         <nav class="menu">
             <ul class="nav">
-                <li class="nav-item"><a class="nav-link" href="/">Inicio</a></li>
-                <li class="nav-item"><a class="nav-link" href="/certificates">Certificados</a></li>
-                <li class="nav-item"><a class="nav-link" href="/verify/">Verificar</a></li>
-                @guest
-                    <li class="nav-item"><a class="nav-link" href="/login">Acceder</a></li>
+                <li class="nav-item"><a class="nav-link" href="/">{{ __('messages.welcome') }}</a></li>
+                <li class="nav-item"><a class="nav-link" href="/certificates">{{ __('messages.certificates_list') }}</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ route('certificates.verify.form') }}">{{ __('messages.verify_certificate') }}</a></li>
+                @auth
+                    @if(auth()->user()->is_admin)
+                        <li class="nav-item"><a class="nav-link" href="/admin">{{ __('messages.admin_panel') }}</a></li>
+                    @endif
+                    <li class="nav-item"><a class="nav-link" href="/logout">{{ __('messages.logout') }}</a></li>
                 @else
-                    <li class="nav-item"><a class="nav-link" href="/dashboard">Panel</a></li>
-                @endguest
+                    <li class="nav-item"><a class="nav-link" href="/login">{{ __('messages.login') }}</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/register">{{ __('messages.register') }}</a></li>
+                @endauth
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="langDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        {{ __('messages.language') }}
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="langDropdown">
+                        <li><a class="dropdown-item" href="?lang=es">{{ __('messages.spanish') }}</a></li>
+                        <li><a class="dropdown-item" href="?lang=en">{{ __('messages.english') }}</a></li>
+                    </ul>
+                </li>
             </ul>
         </nav>
     </header>
