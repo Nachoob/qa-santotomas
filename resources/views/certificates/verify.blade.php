@@ -19,7 +19,8 @@
                     <button id="startScanner" class="btn btn-success w-100">Iniciar Scanner</button>
                 </div>
                 <div class="tab-pane fade" id="manual-section" role="tabpanel">
-                    <form method="GET" action="{{ route('certificates.verify') }}">
+                    <form method="POST" action="{{ route('certificates.checkValidity') }}">
+                        @csrf
                         <div class="mb-3">
                             <label class="form-label">Código de verificación</label>
                             <input type="text" name="code" class="form-control" placeholder="Ingrese el código" required>
