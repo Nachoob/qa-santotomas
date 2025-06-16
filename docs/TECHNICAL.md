@@ -213,3 +213,5 @@ Checks the validity of a certificate via API.
 - Documentation updates
 - Performance optimization
 - Security hardening 
+
+En proceso de documentacion
