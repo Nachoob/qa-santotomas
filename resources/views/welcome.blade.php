@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Certificate Verification System</title>
+    <title>Sistema de verificación de certificados</title>
     
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
@@ -25,17 +25,17 @@
                 <div class="flex justify-between h-16">
                     <div class="flex">
                         <div class="flex-shrink-0 flex items-center">
-                            <h1 class="text-xl font-bold">Certificate Verification System</h1>
+                            <h1 class="text-xl font-bold">Sistema de verificación de certificados</h1>
                         </div>
                     </div>
                     @if (Route::has('login'))
                         <div class="flex items-center">
                             @auth
-                                <a href="{{ url('/dashboard') }}" class="text-sm text-gray-700 underline">Dashboard</a>
+                                <a href="{{ url('/dashboard') }}" class="text-sm text-gray-700 underline">Panel</a>
                             @else
-                                <a href="{{ route('login') }}" class="text-sm text-gray-700 underline">Log in</a>
+                                <a href="{{ route('login') }}" class="text-sm text-gray-700 underline">Acceder</a>
                                 @if (Route::has('register'))
-                                    <a href="{{ route('register') }}" class="ml-4 text-sm text-gray-700 underline">Register</a>
+                                    <a href="{{ route('register') }}" class="ml-4 text-sm text-gray-700 underline">Registro</a>
                                 @endif
                             @endauth
                         </div>
@@ -51,25 +51,25 @@
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <!-- Certificate Upload Section -->
                             <div class="bg-white p-6 rounded-lg shadow">
-                                <h2 class="text-xl font-semibold mb-4">Upload Certificate</h2>
+                                <h2 class="text-xl font-semibold mb-4">Subir certificados</h2>
                                 <form id="uploadForm" class="space-y-4">
                                     <div>
-                                        <label class="block text-sm font-medium text-gray-700">Certificate File</label>
+                                        <label class="block text-sm font-medium text-gray-700">Archivo certificado</label>
                                         <input type="file" class="mt-1 block w-full" accept=".pdf,.jpg,.jpeg,.png" required>
                                     </div>
                                     <div>
-                                        <label class="block text-sm font-medium text-gray-700">Certificate Details</label>
+                                        <label class="block text-sm font-medium text-gray-700">Detalles certificado</label>
                                         <input type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm" placeholder="Certificate ID" required>
                                     </div>
                                     <button type="submit" class="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700">
-                                        Generate QR Code
+                                        Generar código QR
                                     </button>
                                 </form>
                             </div>
 
                             <!-- QR Scanner Section -->
                             <div class="bg-white p-6 rounded-lg shadow">
-                                <h2 class="text-xl font-semibold mb-4">Verify Certificate</h2>
+                                <h2 class="text-xl font-semibold mb-4">Verificar certificado</h2>
                                 
                                 <!-- Tabs for Scanner/Manual Input -->
                                 <div class="mb-4">
@@ -79,7 +79,7 @@
                                                 Scanner
                                             </button>
                                             <button id="manual-tab" class="border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm">
-                                                Manual Input
+                                                Entrada manual
                                             </button>
                                         </nav>
                                     </div>
@@ -90,7 +90,7 @@
                                     <div id="reader" class="w-full"></div>
                                     <div class="mt-4">
                                         <button id="startScanner" class="w-full bg-green-600 text-white py-2 px-4 rounded-md hover:bg-green-700">
-                                            Start Scanner
+                                            Iniciar Scanner
                                         </button>
                                     </div>
                                 </div>
@@ -99,17 +99,17 @@
                                 <div id="manual-section" class="hidden">
                                     <div class="space-y-4">
                                         <div>
-                                            <label class="block text-sm font-medium text-gray-700">Verification Code</label>
+                                            <label class="block text-sm font-medium text-gray-700">Verificación de código</label>
                                             <input type="text" id="verificationCode" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm" placeholder="Enter certificate code">
                                         </div>
                                         <button id="verifyManual" class="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700">
-                                            Verify Certificate
+                                            Verificar certificado
                                         </button>
                                     </div>
                                 </div>
 
                                 <div id="result" class="mt-4 p-4 bg-gray-50 rounded-md hidden">
-                                    <h3 class="font-medium">Verification Result</h3>
+                                    <h3 class="font-medium">Resultado de la verificación</h3>
                                     <p id="verificationText" class="mt-2"></p>
                                 </div>
                             </div>
