@@ -74,24 +74,34 @@ class CertificateController extends Controller
      */
     public function generateQrCode(string $code)
     {
-        $certificate = Certificate::where('verification_code', $code)->first();
+        try {
+            $certificate = Certificate::where('verification_code', $code)->first();
 
-        if (!$certificate) {
-            abort(404);
+            if (!$certificate) {
+                Log::warning('QR Code generation failed: Certificate not found for code.', ['code' => $code]);
+                abort(404, 'Certificado no encontrado para generar QR.');
+            }
+
+            $url = route('certificates.verify', $certificate->verification_code, absolute: true);
+
+            $options = new QROptions([
+                'outputType' => QRCode::OUTPUT_IMAGE_PNG,
+                'eccLevel'   => QRCode::ECC_L,
+                'scale'      => 5,
+                'quietzone'  => 1,
+            ]);
+
+            $qrcode = (new QRCode($options))->render($url);
+
+            return response($qrcode)->header('Content-Type', 'image/png');
+        } catch (\Exception $e) {
+            Log::error('Error generating QR code', [
+                'code' => $code,
+                'error' => $e->getMessage(),
+                'trace' => $e->getTraceAsString(),
+            ]);
+            abort(500, 'Error interno al generar el código QR.');
         }
-
-        $url = route('certificates.verify', $certificate->verification_code, absolute: true);
-
-        $options = new QROptions([
-            'outputType' => QRCode::OUTPUT_IMAGE_PNG,
-            'eccLevel'   => QRCode::ECC_L,
-            'scale'      => 5,
-            'quietzone'  => 1,
-        ]);
-
-        $qrcode = (new QRCode($options))->render($url);
-
-        return response($qrcode)->header('Content-Type', 'image/png');
     }
     
     /**
