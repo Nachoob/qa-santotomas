@@ -93,7 +93,13 @@ class CertificateController extends Controller
 
             $qrcode = (new QRCode($options))->render($url);
 
-            return response($qrcode)->header('Content-Type', 'image/png');
+            // Save the QR code to a temporary file for debugging
+            $filename = 'qrcode_' . $certificate->verification_code . '.png';
+            $filepath = public_path('temp/' . $filename);
+            file_put_contents($filepath, $qrcode);
+            
+            // Return a redirect to the actual image file
+            return redirect(asset('temp/' . $filename));
         } catch (\Exception $e) {
             Log::error('Error generating QR code', [
                 'code' => $code,
