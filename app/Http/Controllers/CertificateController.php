@@ -87,21 +87,63 @@ class CertificateController extends Controller
             $options = new QROptions([
                 'outputType' => QRCode::OUTPUT_IMAGE_PNG,
                 'eccLevel'   => QRCode::ECC_L,
-                'scale'      => 5,
-                'quietzone'  => 1,
+                'scale'      => 10,
+                'quietzone'  => 2,
+                'imageBase64' => false,
+                'addQuietzone' => true,
+                'moduleValues' => [
+                    // finder
+                    QRCode::M_FINDER_DARK    => '#000000', // dark (true)
+                    QRCode::M_FINDER_DOT     => '#000000', // finder dot, dark (true)
+                    QRCode::M_FINDER         => '#000000', // finder, dark (true)
+                    // alignment
+                    QRCode::M_ALIGNMENT_DARK => '#000000', // dark (true)
+                    QRCode::M_ALIGNMENT      => '#000000', // alignment, dark (true)
+                    // timing
+                    QRCode::M_TIMING_DARK    => '#000000', // dark (true)
+                    QRCode::M_TIMING         => '#000000', // timing, dark (true)
+                    // format
+                    QRCode::M_FORMAT_DARK    => '#000000', // dark (true)
+                    QRCode::M_FORMAT         => '#000000', // format, dark (true)
+                    // version
+                    QRCode::M_VERSION_DARK   => '#000000', // dark (true)
+                    QRCode::M_VERSION        => '#000000', // version, dark (true)
+                    // data
+                    QRCode::M_DATA_DARK      => '#000000', // dark (true)
+                    QRCode::M_DATA           => '#000000', // data, dark (true)
+                    // darkmodule
+                    QRCode::M_DARKMODULE     => '#000000', // dark module, dark (true)
+                    // separator
+                    QRCode::M_SEPARATOR      => '#000000', // separator, dark (true)
+                    // quietzone
+                    QRCode::M_QUIETZONE      => '#FFFFFF', // quiet zone, light (false)
+                ],
             ]);
 
             $qrcode = (new QRCode($options))->render($url);
 
-            return response($qrcode)->header('Content-Type', 'image/png');
+            // Ensure we have valid image data
+            if (empty($qrcode)) {
+                throw new \Exception('QR code generation failed: Empty image data');
+            }
+
+            // Set proper headers for PNG image
+            return response($qrcode)
+                ->header('Content-Type', 'image/png')
+                ->header('Cache-Control', 'public, max-age=31536000'); // Cache for 1 year
+
         } catch (\Exception $e) {
             Log::error('Error generating QR code', [
                 'code' => $code,
                 'error' => $e->getMessage(),
                 'trace' => $e->getTraceAsString(),
             ]);
-            // Fallback for debugging: if it's not an image, return error as text.
-            return response('Error: ' . $e->getMessage(), 500)->header('Content-Type', 'text/plain');
+            
+            // Return a more user-friendly error response
+            return response()->json([
+                'error' => 'Error al generar el código QR',
+                'message' => $e->getMessage()
+            ], 500);
         }
     }
     

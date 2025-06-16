@@ -22,7 +22,11 @@
                 <dd class="col-sm-8">{{ $certificate->status }}</dd>
             </dl>
             <div class="mb-3 text-center">
-                <img src="{{ route('certificates.qrcode', $certificate->verification_code) }}" alt="QR Code" class="img-fluid" style="max-width: 200px;">
+                <img src="{{ route('certificates.qrcode', $certificate->verification_code) }}" 
+                     alt="QR Code" 
+                     class="img-fluid" 
+                     style="max-width: 200px; height: auto; display: inline-block;"
+                     onerror="this.onerror=null; this.src='{{ asset('images/qr-error.png') }}';">
                 <p class="mt-2">Escanea para verificar</p>
             </div>
             @if($certificate->file_path ?? false)
