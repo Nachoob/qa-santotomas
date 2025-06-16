@@ -5,34 +5,56 @@
     <div class="col-md-7">
         <div class="card card-minimal p-4">
             <h3 class="mb-4">Verificar Certificado</h3>
-            <ul class="nav nav-tabs mb-3" id="verifyTab" role="tablist">
-                <li class="nav-item" role="presentation">
-                    <button class="nav-link active" id="scanner-tab" data-bs-toggle="tab" data-bs-target="#scanner-section" type="button" role="tab">Scanner</button>
-                </li>
-                <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="manual-tab" data-bs-toggle="tab" data-bs-target="#manual-section" type="button" role="tab">Entrada manual</button>
-                </li>
-            </ul>
-            <div class="tab-content">
-                <div class="tab-pane fade show active" id="scanner-section" role="tabpanel">
-                    <div id="reader" class="w-100 mb-3"></div>
-                    <button id="startScanner" class="btn btn-success w-100">Iniciar Scanner</button>
+            @if(isset($certificate))
+                <div class="alert alert-success">
+                    ¡Certificado válido y encontrado!
                 </div>
-                <div class="tab-pane fade" id="manual-section" role="tabpanel">
-                    <form method="POST" action="{{ route('certificates.checkValidity') }}">
-                        @csrf
-                        <div class="mb-3">
-                            <label class="form-label">Código de verificación</label>
-                            <input type="text" name="code" class="form-control" placeholder="Ingrese el código" required>
-                        </div>
-                        <button type="submit" class="btn btn-primary w-100">Verificar certificado</button>
-                    </form>
+                <dl class="row">
+                    <dt class="col-sm-4">Nombre</dt>
+                    <dd class="col-sm-8">{{ $certificate->recipient_name }}</dd>
+                    <dt class="col-sm-4">Email</dt>
+                    <dd class="col-sm-8">{{ $certificate->recipient_email }}</dd>
+                    <dt class="col-sm-4">Tipo</dt>
+                    <dd class="col-sm-8">{{ $certificate->certificate_type }}</dd>
+                    <dt class="col-sm-4">Fecha emisión</dt>
+                    <dd class="col-sm-8">{{ $certificate->issue_date }}</dd>
+                    <dt class="col-sm-4">Fecha expiración</dt>
+                    <dd class="col-sm-8">{{ $certificate->expiry_date ?? 'No expira' }}</dd>
+                    <dt class="col-sm-4">Código verificación</dt>
+                    <dd class="col-sm-8">{{ $certificate->verification_code }}</dd>
+                    <dt class="col-sm-4">Estado</dt>
+                    <dd class="col-sm-8">{{ $certificate->status }}</dd>
+                </dl>
+            @else
+                <ul class="nav nav-tabs mb-3" id="verifyTab" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="scanner-tab" data-bs-toggle="tab" data-bs-target="#scanner-section" type="button" role="tab">Scanner</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="manual-tab" data-bs-toggle="tab" data-bs-target="#manual-section" type="button" role="tab">Entrada manual</button>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane fade show active" id="scanner-section" role="tabpanel">
+                        <div id="reader" class="w-100 mb-3"></div>
+                        <button id="startScanner" class="btn btn-success w-100">Iniciar Scanner</button>
+                    </div>
+                    <div class="tab-pane fade" id="manual-section" role="tabpanel">
+                        <form method="POST" action="{{ route('certificates.checkValidity') }}">
+                            @csrf
+                            <div class="mb-3">
+                                <label class="form-label">Código de verificación</label>
+                                <input type="text" name="code" class="form-control" placeholder="Ingrese el código" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary w-100">Verificar certificado</button>
+                        </form>
+                    </div>
                 </div>
-            </div>
-            @if(session('result'))
-                <div class="alert alert-info mt-3">
-                    {{ session('result') }}
-                </div>
+                @if(session('result'))
+                    <div class="alert alert-info mt-3">
+                        {{ session('result') }}
+                    </div>
+                @endif
             @endif
         </div>
     </div>
@@ -43,7 +65,7 @@
 <script>
     let html5QrcodeScanner = null;
     let isScanning = false;
-    document.getElementById('startScanner').addEventListener('click', function() {
+    document.getElementById('startScanner')?.addEventListener('click', function() {
         if (!isScanning) {
             startScanner();
         } else {
@@ -76,7 +98,6 @@
     function onScanSuccess(decodedText, decodedResult) {
         stopScanner();
         let code = decodedText;
-        // Si el QR contiene una URL, extrae solo el UUID
         if (code.startsWith('http')) {
             let parts = code.split('/');
             code = parts[parts.length - 1];
