@@ -6,7 +6,7 @@ if (!isset($_SERVER['SERVER_NAME'])) {
 }
 
 // Verificar que es una solicitud local
-if (!in_array($_SERVER['REMOTE_ADDR'], ['127.0.0.1', '::1'])) {
+if (!in_array($_SERVER['REMOTE_ADDR'], ['127.0.0.1', '::1', '181.161.178.175'])) {
     die('Acceso no autorizado');
 }
 
