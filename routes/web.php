@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BackofficeController;
 use App\Http\Controllers\CertificateController;
+use App\Http\Controllers\CacheController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -32,5 +33,7 @@ Route::get('/verify/{code}', [CertificateController::class, 'verify'])->name('ce
 Route::post('/api/certificates/check', [CertificateController::class, 'checkValidity'])->name('certificates.checkValidity');
 
 Route::get('/certificates/{code}/qrcode', [CertificateController::class, 'generateQrCode'])->name('certificates.qrcode');
+
+Route::get('/limpiar-caches-seguro', [CacheController::class, 'clear']);
 
 require __DIR__.'/auth.php';
