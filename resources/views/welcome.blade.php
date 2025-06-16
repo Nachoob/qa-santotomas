@@ -121,7 +121,13 @@
 
     function onScanSuccess(decodedText, decodedResult) {
         stopScanner();
-        verifyCertificate(decodedText);
+        let code = decodedText;
+        // Si el QR contiene una URL, extrae solo el UUID
+        if (code.startsWith('http')) {
+            let parts = code.split('/');
+            code = parts[parts.length - 1];
+        }
+        window.location.href = `{{ url('/verify') }}/${code}`;
     }
 
     function onScanFailure(error) {
