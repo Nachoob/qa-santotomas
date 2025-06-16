@@ -36,8 +36,14 @@
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Tipo de certificado</label>
-                    <input type="text" name="certificate_type" class="form-control" required>
+                    <select name="certificate_type" class="form-control" required>
+                        <option value="">Seleccione un tipo</option>
+                        <option value="course">Curso</option>
+                        <option value="achievement">Logro</option>
+                        <option value="participation">Participación</option>
+                    </select>
                 </div>
+                <input type="hidden" name="issuer_id" value="{{ auth()->id() }}">
                 <div class="mb-3">
                     <label class="form-label">Archivo certificado (PDF/JPG/PNG)</label>
                     <input type="file" name="certificate_file" class="form-control" accept=".pdf,.jpg,.jpeg,.png">
