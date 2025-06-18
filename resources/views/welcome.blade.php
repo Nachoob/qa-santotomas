@@ -180,18 +180,49 @@
 @endsection
 
 @section('footer')
-<footer class="bg-dark text-white py-4 mt-5">
-    <div class="container text-center">
-        <div class="mb-2">
-            <img src="{{ asset('logo.png') }}" alt="Logo QA" style="height: 40px;">
+<footer class="bg-dark text-white pt-5 pb-3 mt-5">
+    <div class="container">
+        <div class="row align-items-start">
+            <div class="col-md-3 mb-4 mb-md-0 text-center text-md-start">
+                <img src="{{ asset('logo.png') }}" alt="Logo QA" style="height: 50px;">
+                <h5 class="mt-2">QA Santo Tomás</h5>
+                <div class="mt-3">
+                    <a href="https://www.instagram.com/" target="_blank" class="text-white me-2"><i class="bi bi-instagram fs-4"></i></a>
+                    <a href="https://www.facebook.com/" target="_blank" class="text-white me-2"><i class="bi bi-facebook fs-4"></i></a>
+                    <a href="mailto:soporte@tudominio.com" class="text-white"><i class="bi bi-envelope fs-4"></i></a>
+                </div>
+            </div>
+            <div class="col-md-3 mb-4 mb-md-0">
+                <h6 class="fw-bold">Sobre el proyecto</h6>
+                <ul class="list-unstyled">
+                    <li><a href="#quienes-somos" class="text-white-50 text-decoration-none">Quiénes somos</a></li>
+                    <li><a href="{{ asset('docs/USER_MANUAL.pdf') }}" class="text-white-50 text-decoration-none" target="_blank">Manual de usuario</a></li>
+                    <li><a href="#faq" class="text-white-50 text-decoration-none">Preguntas frecuentes</a></li>
+                </ul>
+            </div>
+            <div class="col-md-3 mb-4 mb-md-0">
+                <h6 class="fw-bold">Recursos</h6>
+                <ul class="list-unstyled">
+                    <li><a href="/" class="text-white-50 text-decoration-none">Inicio</a></li>
+                    <li><a href="/privacidad" class="text-white-50 text-decoration-none">Política de privacidad</a></li>
+                    <li><a href="mailto:soporte@tudominio.com" class="text-white-50 text-decoration-none">Soporte</a></li>
+                </ul>
+            </div>
+            <div class="col-md-3">
+                <h6 class="fw-bold">Contacto</h6>
+                <ul class="list-unstyled text-white-50">
+                    <li><i class="bi bi-envelope"></i> soporte@tudominio.com</li>
+                    <!-- <li><i class="bi bi-telephone"></i> +56 9 1234 5678</li> -->
+                    <li><i class="bi bi-geo-alt"></i> Santiago, Chile</li>
+                </ul>
+                <div class="small mt-2">
+                    <span class="text-white-50">Proyecto académico de Ingeniería en Informática<br>Santo Tomás {{ date('Y') }}</span>
+                </div>
+            </div>
         </div>
-        <a href="/" class="footer-link">Inicio</a>
-        <a href="{{ asset('docs/USER_MANUAL.pdf') }}" class="footer-link" target="_blank">Manual</a>
-        <a href="mailto:soporte@tudominio.com" class="footer-link">Soporte</a>
-        <a href="/privacidad" class="footer-link">Política de privacidad</a>
-        <div class="mt-2">
-            <a href="mailto:soporte@tudominio.com" class="text-white me-2"><i class="bi bi-envelope"></i></a>
-            <!-- Aquí puedes agregar iconos de redes sociales -->
+        <hr class="border-secondary my-3">
+        <div class="text-center small text-white-50">
+            &copy; {{ date('Y') }} QA Santo Tomás. Todos los derechos reservados.
         </div>
     </div>
 </footer>
