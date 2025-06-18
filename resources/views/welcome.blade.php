@@ -2,209 +2,189 @@
 @section('title', 'Sistema de verificación de certificados')
 @section('head')
 <style>
-    .home-intro {
-        max-width: 600px;
-        margin: 40px auto 60px auto;
-        text-align: center;
+    .hero {
+        background: #f8fafc;
+        padding: 60px 0 40px 0;
     }
-    .card-minimal {
-        border-radius: 18px;
-        box-shadow: 0 2px 16px rgba(0,0,0,0.06);
-    }
+    .hero img { max-height: 70px; }
+    .icon-step { height: 48px; margin-bottom: 10px; }
+    .card-minimal { border-radius: 18px; box-shadow: 0 2px 16px rgba(0,0,0,0.06); }
+    .faq-section .accordion-button { font-weight: 500; }
+    .footer-link { color: #fff; margin-right: 15px; }
+    .footer-link:hover { text-decoration: underline; }
 </style>
 @endsection
 @section('content')
-<div class="home-intro">
-    <h2 class="fw-bold mb-3">Bienvenido al sistema de verificación de certificados</h2>
-    <p class="lead">Este sistema te permite subir, generar y verificar certificados digitales de manera rápida y segura. Puedes verificar la autenticidad de un certificado escaneando su código QR o ingresando el código manualmente.</p>
-</div>
-@auth
-<div class="row justify-content-center g-4">
-    <div class="col-md-5 d-none">
-        
-        <div class="card card-minimal p-4">
-            <h4 class="mb-3">Subir certificados</h4>
-            <form id="uploadForm" class="row g-3">
-                <div class="col-12">
-                    <label class="form-label">Archivo certificado</label>
-                    <input type="file" class="form-control" accept=".pdf,.jpg,.jpeg,.png" required>
-                </div>
-                <div class="col-12">
-                    <label class="form-label">Detalles certificado</label>
-                    <input type="text" class="form-control" placeholder="Certificate ID" required>
-                </div>
-                <div class="col-12">
-                    <button type="submit" class="btn btn-primary w-100">Generar código QR</button>
-                </div>
-            </form>
+<!-- Hero -->
+<section class="hero text-center">
+    <img src="{{ asset('logo.png') }}" alt="Logo QA" class="mb-3">
+    <h1 class="display-5 fw-bold">Genera y valida tus certificados digitales en segundos</h1>
+    <p class="lead mb-4">Seguridad basada en QR, control total de acceso y trazabilidad.</p>
+    <a href="{{ route('register') }}" class="btn btn-primary btn-lg">Comenzar</a>
+    <a href="#demo" class="btn btn-outline-secondary btn-lg ms-2">Ver demo</a>
+</section>
+
+<!-- Resumen de flujo de uso -->
+<section class="container py-5">
+    <h2 class="text-center mb-4">¿Cómo funciona?</h2>
+    <div class="row text-center">
+        <div class="col-md-3">
+            <img src="https://cdn-icons-png.flaticon.com/512/747/747376.png" class="icon-step" alt="Registro">
+            <h5 class="mt-2">Regístrate</h5>
+            <p>Crea tu cuenta y configura tu perfil.</p>
+        </div>
+        <div class="col-md-3">
+            <img src="https://cdn-icons-png.flaticon.com/512/1828/1828919.png" class="icon-step" alt="Genera">
+            <h5 class="mt-2">Genera certificados</h5>
+            <p>Sube o crea certificados digitales únicos.</p>
+        </div>
+        <div class="col-md-3">
+            <img src="https://cdn-icons-png.flaticon.com/512/709/709496.png" class="icon-step" alt="Envía">
+            <h5 class="mt-2">Envía o comparte</h5>
+            <p>Comparte el QR con el destinatario.</p>
+        </div>
+        <div class="col-md-3">
+            <img src="https://cdn-icons-png.flaticon.com/512/565/565547.png" class="icon-step" alt="Valida">
+            <h5 class="mt-2">Valida fácilmente</h5>
+            <p>Escanea el QR o ingresa el código para validar.</p>
         </div>
     </div>
-    <div class="col-md-5 mx-auto">
-        <div class="card card-minimal p-4">
-            <h4 class="mb-3">Verificar certificado</h4>
-            <ul class="nav nav-tabs mb-3" id="verifyTab" role="tablist">
-                <li class="nav-item" role="presentation">
-                    <button class="nav-link active" id="scanner-tab" data-bs-toggle="tab" data-bs-target="#scanner-section" type="button" role="tab">Scanner</button>
-                </li>
-                <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="manual-tab" data-bs-toggle="tab" data-bs-target="#manual-section" type="button" role="tab">Entrada manual</button>
-                </li>
-            </ul>
-            <div class="tab-content">
-                <div class="tab-pane fade show active" id="scanner-section" role="tabpanel">
-                    <div id="reader" class="w-100 mb-3"></div>
-                    <button id="startScanner" class="btn btn-success w-100">Iniciar Scanner</button>
-                </div>
-                <div class="tab-pane fade" id="manual-section" role="tabpanel">
-                    <div class="mb-3">
-                        <label class="form-label">Verificación de código</label>
-                        <input type="text" id="verificationCode" class="form-control" placeholder="Enter certificate code">
-                    </div>
-                    <button id="verifyManual" class="btn btn-primary w-100">Verificar certificado</button>
+</section>
+
+<!-- Manual de usuario -->
+<section class="container py-4">
+    <div class="text-center">
+        <a href="{{ asset('docs/USER_MANUAL.pdf') }}" class="btn btn-outline-primary" target="_blank">
+            <i class="bi bi-file-earmark-text"></i> Ver manual de usuario
+        </a>
+    </div>
+</section>
+
+<!-- Ventajas y casos de uso -->
+<section class="container py-5">
+    <h2 class="text-center mb-4">Ventajas y casos de uso</h2>
+    <div class="row g-4">
+        <div class="col-md-4">
+            <div class="card h-100 shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">Ideal para instituciones</h5>
+                    <p class="card-text">Colegios, eventos, entidades públicas y privadas.</p>
                 </div>
             </div>
-            <div id="result" class="alert alert-info mt-3 d-none">
-                <h5 class="mb-2">Resultado de la verificación</h5>
-                <p id="verificationText"></p>
+        </div>
+        <div class="col-md-4">
+            <div class="card h-100 shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">Cumple con estándares</h5>
+                    <p class="card-text">Firma electrónica, validación offline y trazabilidad.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card h-100 shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">Fácil de usar</h5>
+                    <p class="card-text">No requiere equipos especiales, solo tu cámara o smartphone.</p>
+                </div>
             </div>
         </div>
     </div>
-</div>
-@endauth
+</section>
+
+<!-- Demo en vídeo o capturas -->
+<section class="container py-5" id="demo">
+    <h2 class="text-center mb-4">Mira cómo funciona</h2>
+    <div class="text-center">
+        <!-- Puedes reemplazar el video por un carrusel de imágenes si lo prefieres -->
+        <video src="{{ asset('demo.mp4') }}" controls style="max-width:100%;"></video>
+    </div>
+</section>
+
+<!-- FAQ -->
+<section class="container py-5 faq-section">
+    <h2 class="text-center mb-4">Preguntas frecuentes</h2>
+    <div class="accordion" id="faqAccordion">
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="faq1">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse1">
+                    ¿Necesito equipo especial para validar?
+                </button>
+            </h2>
+            <div id="collapse1" class="accordion-collapse collapse show" data-bs-parent="#faqAccordion">
+                <div class="accordion-body">
+                    No, solo necesitas una cámara o smartphone con acceso a internet.
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="faq2">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse2">
+                    ¿Cómo se protege la clave privada?
+                </button>
+            </h2>
+            <div id="collapse2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                <div class="accordion-body">
+                    La clave privada se almacena cifrada y solo el propietario tiene acceso a ella.
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="faq3">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse3">
+                    ¿Puedo revocar un certificado?
+                </button>
+            </h2>
+            <div id="collapse3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                <div class="accordion-body">
+                    Sí, puedes revocar certificados desde tu panel de administración.
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="faq4">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse4">
+                    ¿Qué pasa si pierdo mi acceso?
+                </button>
+            </h2>
+            <div id="collapse4" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                <div class="accordion-body">
+                    Puedes restablecer tu contraseña usando tu correo electrónico registrado.
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Testimonios o cifras -->
+<section class="container py-5">
+    <div class="row text-center">
+        <div class="col-md-6">
+            <h3>+200 organizaciones confían en nosotros</h3>
+        </div>
+        <div class="col-md-6">
+            <h3>+1.000 certificados emitidos este mes</h3>
+        </div>
+    </div>
+</section>
+
+<!-- Equipo y contacto -->
+<section class="container py-5">
+    <h2 class="text-center mb-4">¿Quiénes somos?</h2>
+    <p class="text-center">Somos un equipo dedicado a la seguridad digital y la validación de documentos. <a href="mailto:soporte@tudominio.com">Contáctanos</a> para soporte o consultas.</p>
+</section>
 @endsection
-@section('scripts')
-@auth
-<script src="https://unpkg.com/html5-qrcode"></script>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script>
-    let html5QrcodeScanner = null;
-    let isScanning = false;
 
-    // Bootstrap tab switching is automatic
-
-    // Scanner functionality
-    document.getElementById('startScanner').addEventListener('click', function() {
-        if (!isScanning) {
-            startScanner();
-        } else {
-            stopScanner();
-        }
-    });
-
-    function startScanner() {
-        if (!html5QrcodeScanner) {
-            html5QrcodeScanner = new Html5QrcodeScanner(
-                "reader",
-                { 
-                    fps: 10, 
-                    qrbox: {width: 250, height: 250},
-                    aspectRatio: 1.0
-                },
-                false
-            );
-        }
-        html5QrcodeScanner.render(onScanSuccess, onScanFailure);
-        isScanning = true;
-        document.getElementById('startScanner').textContent = 'Detener Scanner';
-        document.getElementById('startScanner').classList.remove('btn-success');
-        document.getElementById('startScanner').classList.add('btn-danger');
-    }
-
-    function stopScanner() {
-        if (html5QrcodeScanner) {
-            html5QrcodeScanner.clear();
-        }
-        isScanning = false;
-        document.getElementById('startScanner').textContent = 'Iniciar Scanner';
-        document.getElementById('startScanner').classList.remove('btn-danger');
-        document.getElementById('startScanner').classList.add('btn-success');
-    }
-
-    function onScanSuccess(decodedText, decodedResult) {
-        stopScanner();
-        let code = decodedText;
-        // Si el QR contiene una URL, extrae solo el UUID
-        if (code.startsWith('http')) {
-            let parts = code.split('/');
-            code = parts[parts.length - 1];
-        }
-        window.location.href = `{{ url('/verify') }}/${code}`;
-    }
-
-    function onScanFailure(error) {
-        // Opcional: mostrar error
-    }
-
-    // Manual verification
-    document.getElementById('verifyManual').addEventListener('click', function() {
-        const code = document.getElementById('verificationCode').value;
-        if (code) {
-            verifyCertificate(code);
-        } else {
-            Swal.fire({
-                title: 'Error',
-                text: 'Por favor ingresa un código de verificación',
-                icon: 'error'
-            });
-        }
-    });
-
-    function verifyCertificate(code) {
-        document.getElementById('result').classList.remove('d-none');
-        document.getElementById('verificationText').textContent = 'Verificando certificado...';
-
-        fetch('{{ route('certificates.checkValidity') }}', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRF-TOKEN': '{{ csrf_token() }}'
-            },
-            body: JSON.stringify({ code: code })
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.valid) {
-                Swal.fire({
-                    title: '¡Certificado Válido!',
-                    html: `<p><strong>Nombre:</strong> ${data.certificate.recipient_name}</p>
-                           <p><strong>Tipo:</strong> ${data.certificate.certificate_type}</p>
-                           <p><strong>Fecha de Emisión:</strong> ${data.certificate.issue_date}</p>
-                           ${data.certificate.expiry_date ? `<p><strong>Fecha de Expiración:</strong> ${data.certificate.expiry_date}</p>` : ''}
-                           <p><strong>Estado:</strong> ${data.certificate.status}</p>`,
-                    icon: 'success'
-                });
-                document.getElementById('verificationText').textContent = 'Certificado válido y encontrado.';
-            } else {
-                Swal.fire({
-                    title: 'Certificado Inválido',
-                    text: data.message || 'El certificado no es válido o ha expirado.',
-                    icon: 'error'
-                });
-                document.getElementById('verificationText').textContent = data.message || 'Certificado no válido.';
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            Swal.fire({
-                title: 'Error de Conexión',
-                text: 'No se pudo verificar el certificado. Inténtalo de nuevo.',
-                icon: 'error'
-            });
-            document.getElementById('verificationText').textContent = 'Error al verificar el certificado.';
-        });
-    }
-
-    // Handle form submission
-    document.getElementById('uploadForm').addEventListener('submit', function(e) {
-        e.preventDefault();
-        Swal.fire({
-            title: 'Procesando...',
-            text: 'Generando código QR para tu certificado',
-            icon: 'info',
-            showConfirmButton: false,
-            timer: 2000
-        });
-    });
-</script>
-@endauth
+@section('footer')
+<footer class="bg-dark text-white py-4 mt-5">
+    <div class="container text-center">
+        <a href="/" class="footer-link">Inicio</a>
+        <a href="{{ asset('docs/USER_MANUAL.pdf') }}" class="footer-link" target="_blank">Manual</a>
+        <a href="mailto:soporte@tudominio.com" class="footer-link">Soporte</a>
+        <a href="/privacidad" class="footer-link">Política de privacidad</a>
+        <div class="mt-2">
+            <a href="mailto:soporte@tudominio.com" class="text-white me-2"><i class="bi bi-envelope"></i></a>
+            <!-- Aquí puedes agregar iconos de redes sociales -->
+        </div>
+    </div>
+</footer>
 @endsection
