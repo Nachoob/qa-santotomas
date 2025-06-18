@@ -17,11 +17,10 @@
 @section('content')
 <!-- Hero -->
 <section class="hero text-center">
-    <img src="{{ asset('logo.png') }}" alt="Logo QA" class="mb-3">
     <h1 class="display-5 fw-bold">Genera y valida tus certificados digitales en segundos</h1>
     <p class="lead mb-4">Seguridad basada en QR, control total de acceso y trazabilidad.</p>
     <a href="{{ route('register') }}" class="btn btn-primary btn-lg">Comenzar</a>
-    <a href="#demo" class="btn btn-outline-secondary btn-lg ms-2">Ver demo</a>
+    <a href="#faq" class="btn btn-outline-secondary btn-lg ms-2">Ver preguntas frecuentes</a>
 </section>
 
 <!-- Resumen de flujo de uso -->
@@ -61,14 +60,19 @@
 </section>
 
 <!-- Ventajas y casos de uso -->
-<section class="container py-5">
+<section class="container py-5" style="max-width: 1000px;">
     <h2 class="text-center mb-4">Ventajas y casos de uso</h2>
-    <div class="row g-4">
+    <div class="row g-4 justify-content-center">
         <div class="col-md-4">
             <div class="card h-100 shadow-sm">
                 <div class="card-body">
                     <h5 class="card-title">Ideal para instituciones</h5>
                     <p class="card-text">Colegios, eventos, entidades públicas y privadas.</p>
+                    <ul class="text-start small">
+                        <li>Control de acceso a eventos</li>
+                        <li>Certificados académicos</li>
+                        <li>Validación de membresías</li>
+                    </ul>
                 </div>
             </div>
         </div>
@@ -77,6 +81,11 @@
                 <div class="card-body">
                     <h5 class="card-title">Cumple con estándares</h5>
                     <p class="card-text">Firma electrónica, validación offline y trazabilidad.</p>
+                    <ul class="text-start small">
+                        <li>QR único y seguro</li>
+                        <li>Historial de validaciones</li>
+                        <li>Soporte para normativas nacionales</li>
+                    </ul>
                 </div>
             </div>
         </div>
@@ -85,23 +94,19 @@
                 <div class="card-body">
                     <h5 class="card-title">Fácil de usar</h5>
                     <p class="card-text">No requiere equipos especiales, solo tu cámara o smartphone.</p>
+                    <ul class="text-start small">
+                        <li>Interfaz intuitiva</li>
+                        <li>Validación en segundos</li>
+                        <li>Soporte multiplataforma</li>
+                    </ul>
                 </div>
             </div>
         </div>
     </div>
 </section>
 
-<!-- Demo en vídeo o capturas -->
-<section class="container py-5" id="demo">
-    <h2 class="text-center mb-4">Mira cómo funciona</h2>
-    <div class="text-center">
-        <!-- Puedes reemplazar el video por un carrusel de imágenes si lo prefieres -->
-        <video src="{{ asset('demo.mp4') }}" controls style="max-width:100%;"></video>
-    </div>
-</section>
-
 <!-- FAQ -->
-<section class="container py-5 faq-section">
+<section class="container py-5 faq-section" id="faq">
     <h2 class="text-center mb-4">Preguntas frecuentes</h2>
     <div class="accordion" id="faqAccordion">
         <div class="accordion-item">
@@ -177,6 +182,9 @@
 @section('footer')
 <footer class="bg-dark text-white py-4 mt-5">
     <div class="container text-center">
+        <div class="mb-2">
+            <img src="{{ asset('logo.png') }}" alt="Logo QA" style="height: 40px;">
+        </div>
         <a href="/" class="footer-link">Inicio</a>
         <a href="{{ asset('docs/USER_MANUAL.pdf') }}" class="footer-link" target="_blank">Manual</a>
         <a href="mailto:soporte@tudominio.com" class="footer-link">Soporte</a>

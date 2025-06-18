@@ -142,7 +142,7 @@
     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
         @csrf
     </form>
-    <main class="container mt-5 pt-5">
+    <main class="container pt-5">
         @yield('content')
     </main>
     <script>
