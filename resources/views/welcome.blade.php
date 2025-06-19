@@ -181,6 +181,13 @@
 
 @section('footer')
 <style>
+    @media (max-width: 768px) {
+    .footer-curved {
+        width: 100%;
+        border-radius: 0 0 40px 40px;
+        padding: 0 12px;
+    }
+}
     .footer-curved {
         background: #212529;
         color: #fff;
