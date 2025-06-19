@@ -180,24 +180,45 @@
 @endsection
 
 @section('footer')
-<footer class="bg-dark text-white pt-4 pb-3 mt-5">
-    <div class="container">
-        <div class="d-flex flex-column align-items-center">
-            <img src="{{ asset('logo.png') }}" alt="Logo QA" style="height: 48px;" class="mb-2">
-            <nav class="mb-2">
-                <a href="/" class="text-white mx-3 text-decoration-none">Inicio</a>
-                <a href="#quienes-somos" class="text-white mx-3 text-decoration-none">Quiénes somos</a>
-                <a href="{{ asset('docs/USER_MANUAL.pdf') }}" class="text-white mx-3 text-decoration-none" target="_blank">Manual de usuario</a>
-                <a href="#faq" class="text-white mx-3 text-decoration-none">Preguntas frecuentes</a>
-            </nav>
-            <div class="mb-2">
-                <a href="mailto:soporte@santotomas.cl" class="text-white text-decoration-none"><i class="bi bi-envelope"></i> soporte@santotomas.cl</a>
-            </div>
-            <div class="small text-white-50 text-center">
-                Proyecto académico de Ingeniería en Informática, Santo Tomás {{ date('Y') }}<br>
-                &copy; {{ date('Y') }} QA Santo Tomás. Todos los derechos reservados.
-            </div>
-        </div>
+<style>
+    .footer-curved {
+        background: #212529;
+        color: #fff;
+        max-width: 900px;
+        margin: 40px auto 0 auto;
+        border-top-left-radius: 40px 30px;
+        border-top-right-radius: 40px 30px;
+        box-shadow: 0 -2px 16px rgba(0,0,0,0.08);
+        padding: 32px 24px 18px 24px;
+    }
+    .footer-curved nav a {
+        color: #fff;
+        margin: 0 18px;
+        text-decoration: none;
+        font-weight: 500;
+    }
+    .footer-curved nav a:hover {
+        text-decoration: underline;
+    }
+    .footer-curved .footer-logo {
+        height: 48px;
+        margin-bottom: 8px;
+    }
+</style>
+<footer class="footer-curved text-center">
+    <img src="{{ asset('logo.png') }}" alt="Logo QA" class="footer-logo">
+    <nav class="mb-2">
+        <a href="/">Inicio</a>
+        <a href="#quienes-somos">Quiénes somos</a>
+        <a href="{{ asset('docs/USER_MANUAL.pdf') }}" target="_blank">Manual de usuario</a>
+        <a href="#faq">Preguntas frecuentes</a>
+    </nav>
+    <div class="mb-2">
+        <a href="mailto:soporte@santotomas.cl" class="text-white text-decoration-none"><i class="bi bi-envelope"></i> soporte@santotomas.cl</a>
+    </div>
+    <div class="small text-white-50 text-center">
+        Proyecto académico de Ingeniería en Informática, Santo Tomás {{ date('Y') }}<br>
+        &copy; {{ date('Y') }} QA Santo Tomás. Todos los derechos reservados.
     </div>
 </footer>
 @endsection
