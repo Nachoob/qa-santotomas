@@ -183,8 +183,7 @@
 <style>
     @media (max-width: 768px) {
     .footer-curved {
-        width: 100%;
-        border-radius: 0 0 40px 40px;
+        width: 100% !important;
         padding: 0 12px;
     }
 }
