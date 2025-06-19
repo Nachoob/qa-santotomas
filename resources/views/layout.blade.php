@@ -162,5 +162,6 @@
         });
     </script>
     @yield('scripts')
+    @yield('footer')
 </body>
 </html> 
