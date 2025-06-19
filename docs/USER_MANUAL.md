@@ -1,203 +1,66 @@
-# Certificate Verification System - User Manual
+<!-- portada -->
+<p align="center">
+  <img src="../public/logo.png" alt="Logo QA Santo Tomás" width="120">
+</p>
 
-## Introduction
-Welcome to the Certificate Verification System. This manual will guide you through the process of creating, managing, and verifying digital certificates using our platform.
+<h1 align="center">Manual de Usuario</h1>
+<h2 align="center">Plataforma de Certificados Digitales QA Santo Tomás</h2>
 
-## Getting Started
+<p align="center">
+  <strong>Versión 1.0</strong><br>
+  <strong>Fecha:</strong> 10/06/2025<br>
+  <strong>Autores:</strong> Ignacio Balbontín, Hector Mora, Nicolas Burdiles, Christopher Muñoz, Cristian Tapia<br>
+  <strong>Proyecto académico - Ingeniería en Informática, Santo Tomás</strong>
+</p>
 
-### System Requirements
-- Modern web browser (Chrome, Firefox, Safari, or Edge)
-- Internet connection
-- Camera access (for QR code scanning)
-- Valid email address
+---
 
-### Accessing the System
-1. Open your web browser
-2. Navigate to the system URL
-3. Log in with your credentials
-4. If you don't have an account, click "Register" to create one
+# Índice
+1. [Introducción](#introducción)
+2. [Registro y acceso](#registro-y-acceso)
+3. [Generar certificados](#generar-certificados)
+4. [Compartir y validar certificados](#compartir-y-validar-certificados)
+5. [Panel de usuario](#panel-de-usuario)
+6. [Preguntas frecuentes](#preguntas-frecuentes)
+7. [Contacto y soporte](#contacto-y-soporte)
 
-## Creating Certificates
+---
 
-### Step 1: Access Certificate Creation
-1. Log in to your account
-2. Click "Create Certificate" in the dashboard
-3. Fill in the required information:
-   - Recipient Name
-   - Recipient Email
-   - Certificate Type
-   - Issue Date
-   - Expiry Date (optional)
+# Introducción
+Bienvenido a la plataforma de generación y validación de certificados digitales QA Santo Tomás. Esta herramienta permite a instituciones y usuarios crear, compartir y validar certificados digitales de manera segura y sencilla.
 
-### Step 2: Upload Certificate
-1. Click "Choose File" to select your certificate document
-2. Supported formats: PDF, JPG, JPEG, PNG
-3. Maximum file size: 10MB
+# Registro y acceso
+1. Haz clic en "Registrarse" en la página principal.
+2. Completa el formulario con tus datos personales y correo electrónico.
+3. Recibirás un correo de confirmación para activar tu cuenta.
+4. Inicia sesión con tu correo y contraseña.
 
-### Step 3: Generate QR Code
-1. Review the entered information
-2. Click "Generate QR Code"
-3. The system will create a unique QR code for your certificate
-4. Download or print the QR code
+# Generar certificados
+1. Accede al panel de usuario.
+2. Haz clic en "Generar Certificado".
+3. Completa los datos requeridos del destinatario y el tipo de certificado.
+4. Sube el archivo o genera el certificado digital.
+5. El sistema generará un código QR único para el certificado.
 
-## Verifying Certificates
+# Compartir y validar certificados
+- **Compartir:** Descarga el certificado y comparte el QR o el código con el destinatario.
+- **Validar:**
+  1. El destinatario puede escanear el QR desde la página principal o ingresar el código manualmente.
+  2. El sistema mostrará la validez y los detalles del certificado.
 
-### Using QR Code Scanner
-1. Click "Verify Certificate" on the homepage
-2. Allow camera access when prompted
-3. Point your camera at the certificate's QR code
-4. Wait for the verification result
+# Panel de usuario
+- Visualiza tus certificados generados.
+- Revoca certificados si es necesario.
+- Accede a tu perfil y configuración.
 
-### Manual Verification
-1. Enter the certificate's verification code
-2. Click "Verify"
-3. View the verification result
+# Preguntas frecuentes
+- **¿Necesito equipo especial para validar?** No, solo una cámara o smartphone con acceso a internet.
+- **¿Cómo se protege la clave privada?** Se almacena cifrada y solo el propietario tiene acceso.
+- **¿Puedo revocar un certificado?** Sí, desde el panel de usuario.
+- **¿Qué pasa si pierdo mi acceso?** Puedes restablecer tu contraseña usando tu correo registrado.
 
-## Understanding Verification Results
+# Contacto y soporte
+Si tienes dudas o necesitas ayuda, escribe a: [soporte@santotomas.cl](mailto:soporte@santotomas.cl)
 
-### Valid Certificate
-- Green checkmark icon
-- Certificate details displayed
-- Issue date and expiry date shown
-- Issuer information visible
-
-### Invalid Certificate
-- Red X icon
-- Reason for invalidity displayed
-- Contact information for support
-
-## Managing Certificates
-
-### Viewing Certificates
-1. Go to "My Certificates"
-2. Use filters to find specific certificates
-3. Click on a certificate to view details
-
-### Updating Certificates
-1. Select the certificate to update
-2. Click "Edit"
-3. Modify the required information
-4. Save changes
-
-### Revoking Certificates
-1. Select the certificate to revoke
-2. Click "Revoke"
-3. Confirm the action
-4. Enter revocation reason
-
-## Security Features
-
-### Certificate Protection
-- Unique verification codes
-- Hash-based validation
-- Secure file storage
-- Access control
-
-### User Security
-- Strong password requirements
-- Two-factor authentication
-- Session management
-- Activity logging
-
-## Troubleshooting
-
-### Common Issues
-
-#### QR Code Not Scanning
-- Ensure good lighting
-- Keep the QR code steady
-- Check for damage to the QR code
-- Try manual verification
-
-#### Certificate Not Found
-- Verify the certificate code
-- Check certificate status
-- Contact support if needed
-
-#### Upload Issues
-- Check file format
-- Verify file size
-- Ensure stable internet connection
-- Try a different browser
-
-### Getting Help
-- Check the FAQ section
-- Contact support via email
-- Use the help chat
-- Submit a support ticket
-
-## Best Practices
-
-### Creating Certificates
-- Use clear, high-quality images
-- Include all required information
-- Set appropriate expiry dates
-- Keep backup copies
-
-### Verifying Certificates
-- Use good lighting
-- Keep QR codes clean
-- Verify certificates promptly
-- Report suspicious activity
-
-### Security
-- Use strong passwords
-- Enable 2FA
-- Log out after use
-- Keep contact information updated
-
-## Accessibility Features
-
-### Visual Accessibility
-- High contrast mode
-- Adjustable text size
-- Screen reader support
-- Keyboard navigation
-
-### Language Support
-- Multiple language options
-- Clear error messages
-- Intuitive icons
-- Helpful tooltips
-
-## System Updates
-
-### Checking for Updates
-- System status page
-- Update notifications
-- Release notes
-- Maintenance schedule
-
-### Reporting Issues
-- Bug report form
-- Feature requests
-- User feedback
-- Contact information
-
-## Privacy and Data Protection
-
-### Data Collection
-- Required information
-- Optional information
-- Data retention
-- Data deletion
-
-### User Rights
-- Access to data
-- Data correction
-- Data portability
-- Right to be forgotten
-
-## Support and Contact
-
-### Technical Support
-- Email: support@example.com
-- Phone: +1-234-567-8900
-- Hours: 24/7
-- Response time: < 24 hours
-
-### Emergency Contact
-- Security issues
-- System outages
-- Data breaches
-- Critical updates 
+---
+<p align="center"><em>Proyecto académico de Ingeniería en Informática, Santo Tomás.</em></p> 
