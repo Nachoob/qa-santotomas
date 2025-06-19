@@ -43,7 +43,7 @@
                         <img src="{{ asset('logo.png') }}" alt="Logo" style="width: 80px; height: 80px;">
                     </a>
                 </div>
-                {{ $slot }}
+                @yield('content')
             </div>
         </div>
         <!-- Bootstrap JS -->
