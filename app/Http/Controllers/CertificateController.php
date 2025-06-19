@@ -25,7 +25,14 @@ class CertificateController extends Controller
      */
     public function index()
     {
-        $certificates = Certificate::with('issuer')->latest()->paginate(10);
+        if (auth()->user()->is_admin ?? false) {
+            $certificates = Certificate::with('issuer')->latest()->paginate(10);
+        } else {
+            $certificates = Certificate::with('issuer')
+                ->where('issuer_id', auth()->id())
+                ->latest()
+                ->paginate(10);
+        }
         return view('certificates.index', compact('certificates'));
     }
     
@@ -63,6 +70,10 @@ class CertificateController extends Controller
      */
     public function show(Certificate $certificate)
     {
+        $user = auth()->user();
+        if (!($user->is_admin ?? false) && $certificate->issuer_id !== $user->id) {
+            abort(403, 'No tienes permiso para ver este certificado.');
+        }
         return view('certificates.show', compact('certificate'));
     }
     
