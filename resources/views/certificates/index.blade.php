@@ -19,11 +19,18 @@
                         </tr>
                     </thead>
                     <tbody>
+                        @php
+                            $typeTranslations = [
+                                'course' => 'Curso',
+                                'achievement' => 'Logro',
+                                'participation' => 'Participación',
+                            ];
+                        @endphp
                         @foreach($certificates as $certificate)
                         <tr>
                             <td>{{ $certificate->recipient_name }}</td>
                             <td>{{ $certificate->recipient_email }}</td>
-                            <td>{{ $certificate->certificate_type }}</td>
+                            <td>{{ $typeTranslations[$certificate->certificate_type] ?? $certificate->certificate_type }}</td>
                             <td>{{ $certificate->issue_date }}</td>
                             <td>{{ $certificate->status }}</td>
                             <td>
