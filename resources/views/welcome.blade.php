@@ -184,10 +184,10 @@
     .footer-curved {
         background: #212529;
         color: #fff;
-        max-width: 900px;
+        width: 70%;
         margin: 40px auto 0 auto;
-        border-top-left-radius: 40px 30px;
-        border-top-right-radius: 40px 30px;
+        border-top-left-radius: 60px 40px;
+        border-top-right-radius: 60px 40px;
         box-shadow: 0 -2px 16px rgba(0,0,0,0.08);
         padding: 32px 24px 18px 24px;
     }
@@ -217,7 +217,6 @@
         <a href="mailto:soporte@santotomas.cl" class="text-white text-decoration-none"><i class="bi bi-envelope"></i> soporte@santotomas.cl</a>
     </div>
     <div class="small text-white-50 text-center">
-        Proyecto académico de Ingeniería en Informática, Santo Tomás {{ date('Y') }}<br>
         &copy; {{ date('Y') }} QA Santo Tomás. Todos los derechos reservados.
     </div>
 </footer>
