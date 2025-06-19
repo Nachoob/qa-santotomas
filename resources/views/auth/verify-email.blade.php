@@ -1,4 +1,4 @@
-@extends('layouts.guest')
+@extends('layout')
 
 @section('content')
 <div class="container py-5">
