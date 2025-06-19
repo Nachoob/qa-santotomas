@@ -173,56 +173,30 @@
 </section>
 
 <!-- Equipo y contacto -->
-<section class="container py-5">
+<section class="container py-5" id="quienes-somos">
     <h2 class="text-center mb-4">¿Quiénes somos?</h2>
-    <p class="text-center">Somos un equipo dedicado a la seguridad digital y la validación de documentos. <a href="mailto:soporte@tudominio.com">Contáctanos</a> para soporte o consultas.</p>
+    <p class="text-center">Somos estudiantes de Ingeniería en Informática de Santo Tomás, comprometidos con la innovación y la seguridad digital. Este proyecto es parte de nuestro trabajo académico y busca aportar soluciones tecnológicas reales a la gestión y validación de certificados digitales.</p>
 </section>
 @endsection
 
 @section('footer')
-<footer class="bg-dark text-white pt-5 pb-3 mt-5">
+<footer class="bg-dark text-white pt-4 pb-3 mt-5">
     <div class="container">
-        <div class="row align-items-start">
-            <div class="col-md-3 mb-4 mb-md-0 text-center text-md-start">
-                <img src="{{ asset('logo.png') }}" alt="Logo QA" style="height: 50px;">
-                <h5 class="mt-2">QA Santo Tomás</h5>
-                <div class="mt-3">
-                    <a href="https://www.instagram.com/" target="_blank" class="text-white me-2"><i class="bi bi-instagram fs-4"></i></a>
-                    <a href="https://www.facebook.com/" target="_blank" class="text-white me-2"><i class="bi bi-facebook fs-4"></i></a>
-                    <a href="mailto:soporte@tudominio.com" class="text-white"><i class="bi bi-envelope fs-4"></i></a>
-                </div>
+        <div class="d-flex flex-column align-items-center">
+            <img src="{{ asset('logo.png') }}" alt="Logo QA" style="height: 48px;" class="mb-2">
+            <nav class="mb-2">
+                <a href="/" class="text-white mx-3 text-decoration-none">Inicio</a>
+                <a href="#quienes-somos" class="text-white mx-3 text-decoration-none">Quiénes somos</a>
+                <a href="{{ asset('docs/USER_MANUAL.pdf') }}" class="text-white mx-3 text-decoration-none" target="_blank">Manual de usuario</a>
+                <a href="#faq" class="text-white mx-3 text-decoration-none">Preguntas frecuentes</a>
+            </nav>
+            <div class="mb-2">
+                <a href="mailto:soporte@santotomas.cl" class="text-white text-decoration-none"><i class="bi bi-envelope"></i> soporte@santotomas.cl</a>
             </div>
-            <div class="col-md-3 mb-4 mb-md-0">
-                <h6 class="fw-bold">Sobre el proyecto</h6>
-                <ul class="list-unstyled">
-                    <li><a href="#quienes-somos" class="text-white-50 text-decoration-none">Quiénes somos</a></li>
-                    <li><a href="{{ asset('docs/USER_MANUAL.pdf') }}" class="text-white-50 text-decoration-none" target="_blank">Manual de usuario</a></li>
-                    <li><a href="#faq" class="text-white-50 text-decoration-none">Preguntas frecuentes</a></li>
-                </ul>
+            <div class="small text-white-50 text-center">
+                Proyecto académico de Ingeniería en Informática, Santo Tomás {{ date('Y') }}<br>
+                &copy; {{ date('Y') }} QA Santo Tomás. Todos los derechos reservados.
             </div>
-            <div class="col-md-3 mb-4 mb-md-0">
-                <h6 class="fw-bold">Recursos</h6>
-                <ul class="list-unstyled">
-                    <li><a href="/" class="text-white-50 text-decoration-none">Inicio</a></li>
-                    <li><a href="/privacidad" class="text-white-50 text-decoration-none">Política de privacidad</a></li>
-                    <li><a href="mailto:soporte@tudominio.com" class="text-white-50 text-decoration-none">Soporte</a></li>
-                </ul>
-            </div>
-            <div class="col-md-3">
-                <h6 class="fw-bold">Contacto</h6>
-                <ul class="list-unstyled text-white-50">
-                    <li><i class="bi bi-envelope"></i> soporte@tudominio.com</li>
-                    <!-- <li><i class="bi bi-telephone"></i> +56 9 1234 5678</li> -->
-                    <li><i class="bi bi-geo-alt"></i> Santiago, Chile</li>
-                </ul>
-                <div class="small mt-2">
-                    <span class="text-white-50">Proyecto académico de Ingeniería en Informática<br>Santo Tomás {{ date('Y') }}</span>
-                </div>
-            </div>
-        </div>
-        <hr class="border-secondary my-3">
-        <div class="text-center small text-white-50">
-            &copy; {{ date('Y') }} QA Santo Tomás. Todos los derechos reservados.
         </div>
     </div>
 </footer>
