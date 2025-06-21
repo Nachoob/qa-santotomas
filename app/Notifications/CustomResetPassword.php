@@ -43,14 +43,14 @@ class CustomResetPassword extends Notification
         ], false));
 
         return (new MailMessage)
-            ->subject('Restablece tu contraseña - QA Gasfitería')
+            ->subject('Restablece tu contraseña - QA Santo Tomas')
             ->greeting('¡Hola!')
             ->line('Recibiste este correo porque se solicitó un restablecimiento de contraseña para tu cuenta.')
             ->action('Restablecer contraseña', $resetUrl)
             ->line('Este enlace expirará en 60 minutos.')
             ->line('Fecha de solicitud: ' . Carbon::now()->format('d/m/Y H:i'))
             ->line('Si no solicitaste el restablecimiento, ignora este correo.')
-            ->salutation('Saludos, el equipo de QA Gasfitería');
+            ->salutation('Saludos, el equipo de QA Santo Tomas');
     }
 
     /**

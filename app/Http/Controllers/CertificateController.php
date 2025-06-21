@@ -71,9 +71,25 @@ class CertificateController extends Controller
     public function show(Certificate $certificate)
     {
         $user = auth()->user();
-        if (!($user->is_admin ?? false) && $certificate->issuer_id !== $user->id) {
+        
+        // Log para debug
+        Log::info('Acceso a certificado', [
+            'certificate_id' => $certificate->id,
+            'certificate_issuer_id' => $certificate->issuer_id,
+            'user_id' => $user->id,
+            'user_is_admin' => $user->is_admin ?? false,
+        ]);
+        
+        // Verificar permisos: admin puede ver todos, usuario normal solo los suyos
+        if (!($user->is_admin ?? false) && $certificate->issuer_id != $user->id) {
+            Log::warning('Acceso denegado a certificado', [
+                'certificate_id' => $certificate->id,
+                'user_id' => $user->id,
+                'certificate_issuer_id' => $certificate->issuer_id,
+            ]);
             abort(403, 'No tienes permiso para ver este certificado.');
         }
+        
         return view('certificates.show', compact('certificate'));
     }
     

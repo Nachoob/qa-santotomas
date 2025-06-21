@@ -27,7 +27,6 @@ class CertificateRequest extends FormRequest
             'certificate_type' => 'required|string|in:course,achievement,participation',
             'issue_date' => 'required|date',
             'expiry_date' => 'nullable|date|after:issue_date',
-            'issuer_id' => 'required|exists:users,id',
         ];
     }
 
@@ -48,8 +47,6 @@ class CertificateRequest extends FormRequest
             'issue_date.date' => 'La fecha de emisión debe ser una fecha válida',
             'expiry_date.date' => 'La fecha de expiración debe ser una fecha válida',
             'expiry_date.after' => 'La fecha de expiración debe ser posterior a la fecha de emisión',
-            'issuer_id.required' => 'El emisor es obligatorio',
-            'issuer_id.exists' => 'El emisor seleccionado no existe',
         ];
     }
 }

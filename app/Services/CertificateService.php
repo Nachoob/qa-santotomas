@@ -14,6 +14,9 @@ class CertificateService
     public function createCertificate(array $data): Certificate
     {
         try {
+            // Asegurar que el issuer_id sea el usuario autenticado
+            $data['issuer_id'] = auth()->id();
+            
             $data['verification_code'] = $this->generateVerificationCode();
             $data['hash'] = $this->generateHash($data);
             
@@ -22,6 +25,7 @@ class CertificateService
             Log::info('Certificado creado exitosamente', [
                 'certificate_id' => $certificate->id,
                 'recipient' => $certificate->recipient_name,
+                'issuer_id' => $certificate->issuer_id,
                 'created_by' => auth()->id() ?? 'sistema',
             ]);
             

@@ -43,7 +43,6 @@
                         <option value="participation">Participación</option>
                     </select>
                 </div>
-                <input type="hidden" name="issuer_id" value="{{ auth()->id() }}">
                 <div class="mb-3">
                     <label class="form-label">Archivo certificado (PDF/JPG/PNG)</label>
                     <input type="file" name="certificate_file" class="form-control" accept=".pdf,.jpg,.jpeg,.png">
