@@ -129,34 +129,33 @@
         .menu .nav .btn.btn-outline-primary:hover, .menu .nav .btn.btn-outline-primary:focus {
             color: #fff !important;
         }
-        /* Underline animado para nav-link excepto Panel Admin */
-        .nav-link:not(.btn-outline-primary) {
-            position: relative;
-            display: inline-block;
-            padding-bottom: 6px;
-        }
+        /* Underline solo en hover o activo para nav-link excepto Panel Admin */
         .nav-link:not(.btn-outline-primary)::after {
             content: '';
             position: absolute;
             left: 0;
             right: 0;
             bottom: 0;
-            height: 1.5px;
-            background: #0d6efd; 
+            height: 2px;
+            background: #0d6efd;
             border-radius: 2px;
-            transform: scaleX(0.5);
-            transition: transform 0.3s cubic-bezier(.4,0,.2,1), opacity 0.3s;
+            transform: scaleX(0);
+            transition: transform 0.3s cubic-bezier(.4,0,.2,1);
         }
         .nav-link:not(.btn-outline-primary):hover::after,
-        .nav-link:not(.btn-outline-primary):focus::after {
+        .nav-link:not(.btn-outline-primary):focus::after,
+        .nav-link:not(.btn-outline-primary).active::after {
             transform: scaleX(1);
-            opacity: 1;
         }
         .nav-link:not(.btn-outline-primary) {
+            position: relative;
+            display: inline-block;
+            padding-bottom: 6px;
             transition: color 0.2s;
         }
         .nav-link:not(.btn-outline-primary):hover,
-        .nav-link:not(.btn-outline-primary):focus {
+        .nav-link:not(.btn-outline-primary):focus,
+        .nav-link:not(.btn-outline-primary).active {
             color: #0d6efd;
         }
     </style>
@@ -169,11 +168,11 @@
         </a>
         <nav class="menu">
             <ul class="nav">
-                <li class="nav-item"><a class="nav-link" href="/">Inicio</a></li>
+                <li class="nav-item"><a class="nav-link @if(request()->routeIs('home') || request()->routeIs('/')) active @endif" href="/">Inicio</a></li>
                 @auth
-                    <li class="nav-item"><a class="nav-link" href="{{ route('certificates.create') }}">Generar Certificado</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{{ route('certificates.verify.form') }}">Validar Certificado</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/certificates">Mis Certificados</a></li>
+                    <li class="nav-item"><a class="nav-link @if(request()->routeIs('certificates.create')) active @endif" href="{{ route('certificates.create') }}">Generar Certificado</a></li>
+                    <li class="nav-item"><a class="nav-link @if(request()->routeIs('certificates.verify.form')) active @endif" href="{{ route('certificates.verify.form') }}">Validar Certificado</a></li>
+                    <li class="nav-item"><a class="nav-link @if(request()->routeIs('certificates.index')) active @endif" href="/certificates">Mis Certificados</a></li>
                     <li class="nav-item"><a class="nav-link" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Cerrar Sesión</a></li>
                     @if(auth()->user()->is_admin)
                         <li class="nav-item ms-auto">
@@ -181,8 +180,8 @@
                         </li>
                     @endif
                 @else
-                    <li class="nav-item"><a class="nav-link" href="{{ route('login') }}">Iniciar Sesión</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{{ route('register') }}">Registrarse</a></li>
+                    <li class="nav-item"><a class="nav-link @if(request()->routeIs('login')) active @endif" href="{{ route('login') }}">Iniciar Sesión</a></li>
+                    <li class="nav-item"><a class="nav-link @if(request()->routeIs('register')) active @endif" href="{{ route('register') }}">Registrarse</a></li>
                 @endauth
             </ul>
         </nav>
@@ -193,11 +192,11 @@
         </button>
         <nav class="mobile-menu" id="mobileMenu">
             <ul class="nav flex-column">
-                <li class="nav-item"><a class="nav-link" href="/">Inicio</a></li>
+                <li class="nav-item"><a class="nav-link @if(request()->routeIs('home') || request()->routeIs('/')) active @endif" href="/">Inicio</a></li>
                 @auth
-                    <li class="nav-item"><a class="nav-link" href="{{ route('certificates.create') }}">Generar Certificado</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{{ route('certificates.verify.form') }}">Validar Certificado</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/certificates">Mis Certificados</a></li>
+                    <li class="nav-item"><a class="nav-link @if(request()->routeIs('certificates.create')) active @endif" href="{{ route('certificates.create') }}">Generar Certificado</a></li>
+                    <li class="nav-item"><a class="nav-link @if(request()->routeIs('certificates.verify.form')) active @endif" href="{{ route('certificates.verify.form') }}">Validar Certificado</a></li>
+                    <li class="nav-item"><a class="nav-link @if(request()->routeIs('certificates.index')) active @endif" href="/certificates">Mis Certificados</a></li>
                     <li class="nav-item"><a class="nav-link" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Cerrar Sesión</a></li>
                     @if(auth()->user()->is_admin)
                         <li class="nav-item">
@@ -205,8 +204,8 @@
                         </li>
                     @endif
                 @else
-                    <li class="nav-item"><a class="nav-link" href="{{ route('login') }}">Iniciar Sesión</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{{ route('register') }}">Registrarse</a></li>
+                    <li class="nav-item"><a class="nav-link @if(request()->routeIs('login')) active @endif" href="{{ route('login') }}">Iniciar Sesión</a></li>
+                    <li class="nav-item"><a class="nav-link @if(request()->routeIs('register')) active @endif" href="{{ route('register') }}">Registrarse</a></li>
                 @endauth
             </ul>
         </nav>
