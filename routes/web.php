@@ -16,9 +16,16 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-// Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
-//     Route::get('/', [BackofficeController::class, 'index'])->name('admin.index');
-// });
+Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
+    Route::get('/', [BackofficeController::class, 'index'])->name('admin.index');
+    Route::get('/users', [BackofficeController::class, 'users'])->name('admin.users');
+    Route::get('/users/search', [BackofficeController::class, 'searchUsers'])->name('admin.users.search');
+    Route::get('/users/{id}/edit', [BackofficeController::class, 'editUser'])->name('admin.users.edit');
+    Route::put('/users/{id}', [BackofficeController::class, 'updateUser'])->name('admin.users.update');
+    Route::delete('/users/{id}', [BackofficeController::class, 'destroyUser'])->name('admin.users.destroy');
+    Route::get('/certificates', [BackofficeController::class, 'certificates'])->name('admin.certificates');
+    Route::delete('/certificates/{id}', [BackofficeController::class, 'destroyCertificate'])->name('admin.certificates.destroy');
+});
 
 Route::middleware(['auth'])->group(function () {
     Route::resource('certificates', CertificateController::class);
