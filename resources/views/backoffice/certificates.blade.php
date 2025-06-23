@@ -26,11 +26,15 @@
                                 <th>Tipo</th>
                                 <th>Emitido por</th>
                                 <th>Fecha emisión</th>
+                                <th>Estado</th>
                                 <th>Acciones</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach($certificates as $certificate)
+                            @php
+                                $isExpired = $certificate->expiry_date && \Carbon\Carbon::parse($certificate->expiry_date)->isPast();
+                            @endphp
                                 <tr>
                                     <td>{{ $certificate->id }}</td>
                                     <td>{{ $certificate->verification_code }}</td>
@@ -38,6 +42,15 @@
                                     <td>{{ $certificate->certificate_type }}</td>
                                     <td>{{ $certificate->issuer ? $certificate->issuer->name : '-' }}</td>
                                     <td>{{ $certificate->issue_date ? $certificate->issue_date->format('Y-m-d') : '-' }}</td>
+                                    <td>
+                                        @if($isExpired)
+                                            <span class="badge bg-danger">Vencido</span>
+                                        @elseif($certificate->status === 'inactive')
+                                            <span class="badge bg-secondary">Inactivo</span>
+                                        @else
+                                            <span class="badge bg-success">Activo</span>
+                                        @endif
+                                    </td>
                                     <td>
                                         <form action="{{ route('admin.certificates.destroy', $certificate->id) }}" method="POST" class="d-inline">
                                             @csrf
@@ -57,4 +70,4 @@
         </div>
     </div>
 </div>
-@endsection 
+@endsection

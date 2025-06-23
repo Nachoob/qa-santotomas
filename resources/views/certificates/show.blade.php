@@ -20,7 +20,18 @@
                 <dt class="col-sm-4">Código verificación</dt>
                 <dd class="col-sm-8">{{ $certificate->verification_code }}</dd>
                 <dt class="col-sm-4">Estado</dt>
-                <dd class="col-sm-8">{{ $certificate->status }}</dd>
+                <dd class="col-sm-8">
+                    @php
+                        $isExpired = $certificate->expiry_date && \Carbon\Carbon::parse($certificate->expiry_date)->isPast();
+                    @endphp
+                    @if($isExpired)
+                        <span class="badge bg-danger">Vencido</span>
+                    @elseif($certificate->status === 'inactive')
+                        <span class="badge bg-secondary">Inactivo</span>
+                    @else
+                        <span class="badge bg-success">Activo</span>
+                    @endif
+                </dd>
             </dl>
             <div class="mb-3 text-center">
                 <img src="{{ route('certificates.qrcode', $certificate->verification_code) }}" 
@@ -36,4 +47,4 @@
         </div>
     </div>
 </div>
-@endsection 
+@endsection

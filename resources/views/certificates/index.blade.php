@@ -28,12 +28,23 @@
                             ];
                         @endphp
                         @foreach($certificates as $certificate)
+                        @php
+                            $isExpired = $certificate->expiry_date && \Carbon\Carbon::parse($certificate->expiry_date)->isPast();
+                        @endphp
                         <tr>
                             <td>{{ $certificate->recipient_name }}</td>
                             <td>{{ $certificate->recipient_email }}</td>
                             <td>{{ $typeTranslations[$certificate->certificate_type] ?? $certificate->certificate_type }}</td>
                             <td>{{ $certificate->issue_date }}</td>
-                            <td>{{ $certificate->status }}</td>
+                            <td>
+                                @if($isExpired)
+                                    <span class="badge bg-danger">Vencido</span>
+                                @elseif($certificate->status === 'inactive')
+                                    <span class="badge bg-secondary">Inactivo</span>
+                                @else
+                                    <span class="badge bg-success">Activo</span>
+                                @endif
+                            </td>
                             <td>
                                 <a href="{{ route('certificates.show', $certificate) }}" class="btn btn-sm btn-outline-primary">Ver</a>
                             </td>
@@ -46,4 +57,4 @@
         </div>
     </div>
 </div>
-@endsection 
+@endsection
