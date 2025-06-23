@@ -3,6 +3,8 @@
 echo "<pre>";
 
 // 1. Verifica si el archivo existe
+echo "Directorio actual: " . __DIR__ . "\n";
+echo "Intentando abrir: " . __DIR__ . '/app/Http/Middleware/AdminMiddleware.php' . "\n";
 $path = __DIR__ . '/app/Http/Middleware/AdminMiddleware.php';
 echo "Archivo AdminMiddleware.php: ";
 echo file_exists($path) ? "ENCONTRADO\n" : "NO ENCONTRADO\n";
