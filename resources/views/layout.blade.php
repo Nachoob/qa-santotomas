@@ -129,6 +129,37 @@
         .menu .nav .btn.btn-outline-primary:hover, .menu .nav .btn.btn-outline-primary:focus {
             color: #fff !important;
         }
+        /* Underline animado para nav-link excepto Panel Admin */
+        .nav-link:not(.btn-outline-primary) {
+            position: relative;
+            display: inline-block;
+            padding-bottom: 6px;
+        }
+        .nav-link:not(.btn-outline-primary)::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            height: 3px;
+            background: #0d6efd; /* Color primario Bootstrap */
+            border-radius: 2px;
+            opacity: 0.7;
+            transform: scaleX(0.5);
+            transition: transform 0.3s cubic-bezier(.4,0,.2,1), opacity 0.3s;
+        }
+        .nav-link:not(.btn-outline-primary):hover::after,
+        .nav-link:not(.btn-outline-primary):focus::after {
+            transform: scaleX(1);
+            opacity: 1;
+        }
+        .nav-link:not(.btn-outline-primary) {
+            transition: color 0.2s;
+        }
+        .nav-link:not(.btn-outline-primary):hover,
+        .nav-link:not(.btn-outline-primary):focus {
+            color: #0d6efd;
+        }
     </style>
     @yield('head')
 </head>
