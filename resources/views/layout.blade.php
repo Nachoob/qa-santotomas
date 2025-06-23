@@ -156,6 +156,21 @@
         .nav-link:not(.btn-outline-primary):focus {
             color: #0d6efd;
         }
+        html, body {
+            height: 100%;
+            min-height: 100%;
+        }
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        main.container {
+            flex: 1 0 auto;
+        }
+        .footer-curved {
+            flex-shrink: 0;
+        }
     </style>
     @yield('head')
 </head>
