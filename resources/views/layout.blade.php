@@ -142,7 +142,7 @@
             right: 0;
             bottom: 0;
             height: 3px;
-            background: #0d6efd; /* Color primario Bootstrap */
+            background: #0d6efd; 
             border-radius: 2px;
             opacity: 0.7;
             transform: scaleX(0.5);
