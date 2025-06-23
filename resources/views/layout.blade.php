@@ -20,7 +20,7 @@
             display: flex;
             align-items: center;
             justify-content: flex-start;
-            padding: 0 24px;
+            padding: 10px 24px;
         }
         .logo {
             height: 60px;
@@ -88,7 +88,7 @@
                 width: 100%;
                 border-radius: 0 0 40px 40px;
                 height: 72px;
-                padding: 0 12px;
+                padding: 6px 12px;
             }
             .logo {
                 height: 50px;
