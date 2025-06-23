@@ -1,39 +1,33 @@
 <?php
 
-echo "<pre>";
+header('Content-Type: text/plain; charset=utf-8');
 
-// 1. Verifica si el archivo existe
-echo "Directorio actual: " . __DIR__ . "\n";
-echo "Intentando abrir: " . __DIR__ . '/../app/Http/Middleware/AdminMiddleware.php' . "\n";
-$path = __DIR__ . '/../app/Http/Middleware/AdminMiddleware.php';
-echo "Archivo AdminMiddleware.php: ";
-echo file_exists($path) ? "ENCONTRADO\n" : "NO ENCONTRADO\n";
-
-// 2. Intenta cargar la clase usando el autoload de Composer
-require __DIR__ . '/../vendor/autoload.php';
-
-echo "Clase App\\Http\\Middleware\\AdminMiddleware: ";
-if (class_exists('App\Http\Middleware\AdminMiddleware')) {
-    echo "ENCONTRADA\n";
-    $reflection = new ReflectionClass('App\Http\Middleware\AdminMiddleware');
-    echo "Métodos: " . implode(', ', array_map(fn($m) => $m->name, $reflection->getMethods())) . "\n";
-} else {
-    echo "NO ENCONTRADA\n";
-}
-
-// 4. Verifica el registro en Kernel.php
-$kernelPath = __DIR__ . '/../app/Http/Kernel.php';
-echo "\nBuscando registro en Kernel.php:\n";
-if (file_exists($kernelPath)) {
-    $kernelContent = file_get_contents($kernelPath);
-    if (strpos($kernelContent, "'admin' => \\App\\Http\\Middleware\\AdminMiddleware::class") !== false) {
-        echo "Registro de 'admin' ENCONTRADO en Kernel.php\n";
+function showFile($path) {
+    echo "\n==== $path ====";
+    if (file_exists($path)) {
+        echo "\n" . file_get_contents($path) . "\n";
     } else {
-        echo "Registro de 'admin' NO ENCONTRADO en Kernel.php\n";
+        echo "\n(No existe)\n";
     }
-} else {
-    echo "Kernel.php NO ENCONTRADO\n";
 }
 
-echo "\nDiagnóstico terminado.\n";
-echo "</pre>";
+// Mostrar archivos clave de caché y autoload
+showFile(__DIR__ . '/bootstrap/cache/config.php');
+showFile(__DIR__ . '/bootstrap/cache/routes-v7.php');
+showFile(__DIR__ . '/bootstrap/cache/routes.php');
+showFile(__DIR__ . '/vendor/composer/autoload_classmap.php');
+showFile(__DIR__ . '/vendor/composer/autoload_psr4.php');
+showFile(__DIR__ . '/app/Http/Kernel.php');
+showFile(__DIR__ . '/app/Http/Middleware/AdminMiddleware.php');
+
+// Mostrar últimos logs
+$logDir = __DIR__ . '/storage/logs/';
+if (is_dir($logDir)) {
+    $logs = glob($logDir . '*.log');
+    rsort($logs);
+    foreach (array_slice($logs, 0, 2) as $log) {
+        showFile($log);
+    }
+}
+
+echo "\n\nFIN DEL DIAGNÓSTICO\n";

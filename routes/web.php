@@ -10,13 +10,13 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::middleware('auth')->group(function () {
+Route::group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
+Route::prefix('admin')->group(function () {
     Route::get('/', [BackofficeController::class, 'index'])->name('admin.index');
     Route::get('/users', [BackofficeController::class, 'users'])->name('admin.users');
     Route::get('/users/search', [BackofficeController::class, 'searchUsers'])->name('admin.users.search');
@@ -27,7 +27,7 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     Route::delete('/certificates/{id}', [BackofficeController::class, 'destroyCertificate'])->name('admin.certificates.destroy');
 });
 
-Route::middleware(['auth'])->group(function () {
+Route::group(function () {
     Route::resource('certificates', CertificateController::class);
 });
 
@@ -42,9 +42,5 @@ Route::post('/api/certificates/check', [CertificateController::class, 'checkVali
 Route::get('/certificates/{code}/qrcode', [CertificateController::class, 'generateQrCode'])->name('certificates.qrcode');
 
 Route::get('/limpiar-caches-seguro', [CacheController::class, 'clear']);
-
-Route::middleware(['test'])->get('/test-middleware', function () {
-    return 'Middleware funciona';
-});
 
 require __DIR__.'/auth.php';
