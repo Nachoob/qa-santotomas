@@ -43,4 +43,8 @@ Route::get('/certificates/{code}/qrcode', [CertificateController::class, 'genera
 
 Route::get('/limpiar-caches-seguro', [CacheController::class, 'clear']);
 
+Route::middleware(['test'])->get('/test-middleware', function () {
+    return 'Middleware funciona';
+});
+
 require __DIR__.'/auth.php';
