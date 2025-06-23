@@ -141,10 +141,9 @@
             left: 0;
             right: 0;
             bottom: 0;
-            height: 3px;
+            height: 1.5px;
             background: #0d6efd; 
             border-radius: 2px;
-            opacity: 0.7;
             transform: scaleX(0.5);
             transition: transform 0.3s cubic-bezier(.4,0,.2,1), opacity 0.3s;
         }
