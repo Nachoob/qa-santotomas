@@ -2,6 +2,7 @@
 @section('title', 'Panel de Administración')
 @section('content')
 <div class="container mt-4">
+    <a href="{{ url('/') }}" class="btn btn-secondary mb-3">← Volver al inicio</a>
     <div class="row mb-4">
         <div class="col">
             <h2>Panel de Administración</h2>

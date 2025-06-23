@@ -2,6 +2,7 @@
 @section('title', 'Editar Usuario')
 @section('content')
 <div class="container py-4">
+    <a href="{{ route('admin.index') }}" class="btn btn-secondary mb-3">← Volver al Panel Admin</a>
     <div class="card shadow-sm">
         <div class="card-header bg-primary text-white">
             <h4 class="mb-0">Editar Usuario</h4>

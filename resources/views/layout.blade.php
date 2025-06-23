@@ -142,6 +142,11 @@
                     <li class="nav-item"><a class="nav-link" href="{{ route('certificates.verify.form') }}">Validar Certificado</a></li>
                     <li class="nav-item"><a class="nav-link" href="/certificates">Mis Certificados</a></li>
                     <li class="nav-item"><a class="nav-link" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Cerrar Sesión</a></li>
+                    @if(auth()->user()->is_admin)
+                        <li class="nav-item ms-auto">
+                            <a class="nav-link btn btn-outline-primary px-3 ms-3" href="{{ route('admin.index') }}"><strong>Panel Admin</strong></a>
+                        </li>
+                    @endif
                 @else
                     <li class="nav-item"><a class="nav-link" href="{{ route('login') }}">Iniciar Sesión</a></li>
                     <li class="nav-item"><a class="nav-link" href="{{ route('register') }}">Registrarse</a></li>
@@ -161,6 +166,11 @@
                     <li class="nav-item"><a class="nav-link" href="{{ route('certificates.verify.form') }}">Validar Certificado</a></li>
                     <li class="nav-item"><a class="nav-link" href="/certificates">Mis Certificados</a></li>
                     <li class="nav-item"><a class="nav-link" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Cerrar Sesión</a></li>
+                    @if(auth()->user()->is_admin)
+                        <li class="nav-item">
+                            <a class="nav-link btn btn-outline-primary my-2" href="{{ route('admin.index') }}"><strong>Panel Admin</strong></a>
+                        </li>
+                    @endif
                 @else
                     <li class="nav-item"><a class="nav-link" href="{{ route('login') }}">Iniciar Sesión</a></li>
                     <li class="nav-item"><a class="nav-link" href="{{ route('register') }}">Registrarse</a></li>

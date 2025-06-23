@@ -2,6 +2,7 @@
 @section('title', 'Gestión de Usuarios')
 @section('content')
 <div class="container py-4">
+    <a href="{{ route('admin.index') }}" class="btn btn-secondary mb-3">← Volver al Panel Admin</a>
     @if(session('success'))
         <div class="alert alert-success">{{ session('success') }}</div>
     @endif
