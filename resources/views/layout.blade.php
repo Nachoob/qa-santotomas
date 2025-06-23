@@ -126,7 +126,7 @@
             height: 48px;
             margin-bottom: 8px;
         }
-        .btn.btn-primary:hover, .btn.btn-primary:focus {
+        .menu .nav .btn.btn-outline-primary:hover, .menu .nav .btn.btn-outline-primary:focus {
             color: #fff !important;
         }
     </style>
