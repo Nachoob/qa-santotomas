@@ -5,6 +5,7 @@
     <div class="col-md-7">
         <div class="card card-minimal p-4">
             <h3 class="mb-4">Generar/Registrar Certificado</h3>
+            <p class="text-muted mb-4">Completa el siguiente formulario para registrar un nuevo certificado en el sistema. Asegúrate de ingresar correctamente los datos del destinatario y adjuntar el archivo correspondiente.</p>
             @if (session('success'))
                 <div class="alert alert-success">
                     {{ session('success') }}

@@ -5,6 +5,7 @@
     <div class="col-md-10">
         <div class="card card-minimal p-4">
             <h3 class="mb-4">Listado de Certificados</h3>
+            <p class="text-muted mb-4">En esta sección puedes consultar todos los certificados registrados, ver sus detalles y acceder a nuevas funciones de gestión.</p>
             <a href="{{ route('certificates.create') }}" class="btn btn-success mb-3">Nuevo certificado</a>
             <div class="table-responsive">
                 <table class="table table-striped">

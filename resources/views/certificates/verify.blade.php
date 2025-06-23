@@ -5,6 +5,7 @@
     <div class="col-md-7">
         <div class="card card-minimal p-4">
             <h3 class="mb-4">Verificar Certificado</h3>
+            <p class="text-muted mb-4">Puedes verificar la validez de un certificado escaneando su código QR o ingresando manualmente el código de verificación proporcionado en el documento.</p>
             <ul class="nav nav-tabs mb-3" id="verifyTab" role="tablist">
                 <li class="nav-item" role="presentation">
                     <button class="nav-link active" id="scanner-tab" data-bs-toggle="tab" data-bs-target="#scanner-section" type="button" role="tab">Scanner</button>

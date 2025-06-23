@@ -5,6 +5,7 @@
     <div class="col-md-7">
         <div class="card card-minimal p-4">
             <h3 class="mb-4">Detalle de Certificado</h3>
+            <p class="text-muted mb-4">Aquí puedes consultar toda la información relevante sobre el certificado seleccionado, incluyendo sus datos, estado y código de verificación.</p>
             <dl class="row">
                 <dt class="col-sm-4">Nombre</dt>
                 <dd class="col-sm-8">{{ $certificate->recipient_name }}</dd>
