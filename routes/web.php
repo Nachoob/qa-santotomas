@@ -16,9 +16,9 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
-    Route::get('/', [BackofficeController::class, 'index'])->name('admin.index');
-});
+// Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
+//     Route::get('/', [BackofficeController::class, 'index'])->name('admin.index');
+// });
 
 Route::middleware(['auth'])->group(function () {
     Route::resource('certificates', CertificateController::class);
