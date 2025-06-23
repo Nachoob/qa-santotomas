@@ -126,8 +126,7 @@
             height: 48px;
             margin-bottom: 8px;
         }
-        nav.menu ul.nav .btn.btn-primary:hover, nav.menu ul.nav .btn.btn-primary:focus,
-        nav.mobile-menu ul.nav .btn.btn-primary:hover, nav.mobile-menu ul.nav .btn.btn-primary:focus {
+        .btn.btn-primary:hover, .btn.btn-primary:focus {
             color: #fff !important;
         }
     </style>
