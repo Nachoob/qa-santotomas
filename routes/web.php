@@ -10,11 +10,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-});
+Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
 Route::prefix('admin')->group(function () {
     Route::get('/', [BackofficeController::class, 'index'])->name('admin.index');
@@ -27,9 +25,7 @@ Route::prefix('admin')->group(function () {
     Route::delete('/certificates/{id}', [BackofficeController::class, 'destroyCertificate'])->name('admin.certificates.destroy');
 });
 
-Route::group(function () {
-    Route::resource('certificates', CertificateController::class);
-});
+Route::resource('certificates', CertificateController::class);
 
 Route::get('/verify', function () {
     return view('certificates.verify');
