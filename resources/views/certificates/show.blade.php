@@ -12,7 +12,16 @@
                 <dt class="col-sm-4">Email</dt>
                 <dd class="col-sm-8">{{ $certificate->recipient_email }}</dd>
                 <dt class="col-sm-4">Tipo</dt>
-                <dd class="col-sm-8">{{ $certificate->certificate_type }}</dd>
+                <dd class="col-sm-8">
+                    @php
+                        $typeTranslations = [
+                            'course' => 'Curso',
+                            'achievement' => 'Logro',
+                            'participation' => 'Participación',
+                        ];
+                    @endphp
+                    {{ $typeTranslations[$certificate->certificate_type] ?? $certificate->certificate_type }}
+                </dd>
                 <dt class="col-sm-4">Fecha emisión</dt>
                 <dd class="col-sm-8">{{ $certificate->issue_date }}</dd>
                 <dt class="col-sm-4">Fecha expiración</dt>

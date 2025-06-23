@@ -16,6 +16,13 @@
                     No hay certificados registrados aún.
                 </div>
             @else
+                @php
+                    $typeTranslations = [
+                        'course' => 'Curso',
+                        'achievement' => 'Logro',
+                        'participation' => 'Participación',
+                    ];
+                @endphp
                 <div class="table-responsive">
                     <table class="table table-striped table-hover">
                         <thead>
@@ -39,7 +46,7 @@
                                     <td>{{ $certificate->id }}</td>
                                     <td>{{ $certificate->verification_code }}</td>
                                     <td>{{ $certificate->recipient_name }}</td>
-                                    <td>{{ $certificate->certificate_type }}</td>
+                                    <td>{{ $typeTranslations[$certificate->certificate_type] ?? $certificate->certificate_type }}</td>
                                     <td>{{ $certificate->issuer ? $certificate->issuer->name : '-' }}</td>
                                     <td>{{ $certificate->issue_date ? $certificate->issue_date->format('Y-m-d') : '-' }}</td>
                                     <td>
