@@ -129,7 +129,7 @@
         .menu .nav .btn.btn-outline-primary:hover, .menu .nav .btn.btn-outline-primary:focus {
             color: #fff !important;
         }
-        /* Underline solo en hover o activo para nav-link excepto Panel Admin */
+        /* Underline animado solo en hover/focus para nav-link excepto Panel Admin */
         .nav-link:not(.btn-outline-primary)::after {
             content: '';
             position: absolute;
@@ -143,8 +143,7 @@
             transition: transform 0.3s cubic-bezier(.4,0,.2,1);
         }
         .nav-link:not(.btn-outline-primary):hover::after,
-        .nav-link:not(.btn-outline-primary):focus::after,
-        .nav-link:not(.btn-outline-primary).active::after {
+        .nav-link:not(.btn-outline-primary):focus::after {
             transform: scaleX(1);
         }
         .nav-link:not(.btn-outline-primary) {
@@ -154,8 +153,7 @@
             transition: color 0.2s;
         }
         .nav-link:not(.btn-outline-primary):hover,
-        .nav-link:not(.btn-outline-primary):focus,
-        .nav-link:not(.btn-outline-primary).active {
+        .nav-link:not(.btn-outline-primary):focus {
             color: #0d6efd;
         }
     </style>
